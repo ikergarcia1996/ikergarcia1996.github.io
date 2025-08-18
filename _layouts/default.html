@@ -18,10 +18,11 @@
     <header class="page-header" role="banner">
       <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
       <nav aria-label="Primary">
-        <a href="{{ '/' | relative_url }}" class="btn">About Me</a>
-        {% for page in site.pages %}
-          {% if page.button_title and page.filename %}
-            <a href="{{ page.filename | relative_url }}" class="btn">{{ page.button_title }}</a>
+        {% assign current_url = page.url | relative_url %}
+        <a href="{{ '/' | relative_url }}" class="btn {% if current_url == '/' or current_url == '/index.html' or page.path == 'README.md' %}btn--active{% endif %}">About Me</a>
+        {% for nav_page in site.pages %}
+          {% if nav_page.button_title and nav_page.filename %}
+            <a href="{{ nav_page.filename | relative_url }}" class="btn {% if nav_page.path == page.path %}btn--active{% endif %}">{{ nav_page.button_title }}</a>
           {% endif %}
         {% endfor %}
       </nav>

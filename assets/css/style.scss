@@ -77,6 +77,13 @@ body {
   backdrop-filter: blur(4px);
 }
 
+// Active nav tab: slightly lighter to indicate current page
+.page-header .btn.btn--active {
+  background: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.95);
+}
+
 // Buttons - elevate and refine
 .btn {
   border-radius: 999px;
