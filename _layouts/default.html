@@ -65,8 +65,8 @@
         }
 
         function tick(){
-          current.x = lerp(current.x, target.x, 0.14);
-          current.y = lerp(current.y, target.y, 0.14);
+          current.x = lerp(current.x, target.x, 0.25);
+          current.y = lerp(current.y, target.y, 0.25);
           applyVars(current.x, current.y);
           if (interacting) {
             rafId = requestAnimationFrame(tick);
