@@ -272,10 +272,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(60% 80% at var(--g1x) var(--g1y), rgba(255, 255, 255, 0.10), transparent 60%),
-    radial-gradient(50% 70% at var(--g2x) var(--g2y), rgba(255, 255, 255, 0.08), transparent 60%),
-    radial-gradient(40% 60% at var(--g3x) var(--g3y), rgba(255, 255, 255, 0.10), transparent 65%);
+  background: transparent; /* no idle glow */
   background-size: 200% 200%;
   mix-blend-mode: overlay;
   pointer-events: none;
@@ -285,13 +282,11 @@ body {
 
 // Disable the drift while interacting (JS toggles this class)
 .page-header.is-interactive::after {
-  /* make interaction more noticeable */
-  mix-blend-mode: screen;
+  /* single, stronger purple glow following the pointer */
+  mix-blend-mode: normal;
   background:
-    radial-gradient(60% 80% at var(--g1x) var(--g1y), rgba(255, 255, 255, 0.24), transparent 60%),
-    radial-gradient(50% 70% at var(--g2x) var(--g2y), rgba(255, 255, 255, 0.20), transparent 60%),
-    radial-gradient(40% 60% at var(--g3x) var(--g3y), rgba(255, 255, 255, 0.24), transparent 65%);
-  filter: brightness(1.06) saturate(1.12);
+    radial-gradient(40% 60% at var(--g1x) var(--g1y), rgba(168, 85, 247, 0.40), transparent 55%),
+    radial-gradient(20% 30% at var(--g1x) var(--g1y), rgba(168, 85, 247, 0.60), transparent 35%);
 }
 
 // Click pulse feedback
