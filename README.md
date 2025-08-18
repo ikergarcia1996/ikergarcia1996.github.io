@@ -10,6 +10,8 @@
       <br><br>
    Currently an LLM Researcher at <a href="https://multiversecomputing.com">Multiverse Computing</a>.
       <br><br>
+   Exponential Fellow 2025 <a href="https://www.goexponential.org">https://www.goexponential.org/directory/fellows/iker-garcia-ferrero</a>
+      <br><br>
       In my free time, I develop <a href="https://veridika.ai">veridika.ai</a>, an AI agent framework for real-time fact-checking.
     </div>
   </div>

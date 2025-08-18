@@ -1,6 +1,6 @@
 ---
 title: Iker García-Ferrero
-button_title: Experience
+button_title: Career
 layout: default
 filename: experience
 ---
@@ -81,6 +81,73 @@ filename: experience
       <p class="meta">University of the Basque Country UPV/EHU</p>
       <p class="meta">2014 – 2017</p>
       <p class="meta">Donostia - San Sebastián · Spain</p>
+    </div>
+  </div>
+</div>
+
+# Grants and Adwars
+
+<div class="grid">
+
+  <div class="card">
+    <img class="card-img" src="icons/exponential.svg" alt="Exponential Fellowship">
+    <div class="card-content">
+      <h3 class="card-title">Exponential Fellow</h3>
+      <p class="meta">The Exponential Fellowship</p>
+      <p class="meta">2025</p>
+      <p>The Exponential Fellowship: A fellowship program that aims to find brightest builders in Spain to send on a life-changing experience to the US.</p>
+      <p><a href="https://www.goexponential.org">https://www.goexponential.org/directory/fellows/iker-garcia-ferrero</a></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img class="card-img" src="icons/ODESIA.png" alt="ODESIA Challenge">
+    <div class="card-content">
+      <h3 class="card-title">Winner of the ODESIA Challenge @ SEPLN 2024</h3>
+      <p class="meta">UNED</p>
+      <p class="meta">Feb. 2025</p>
+      <p>Winner of the ODESIA Challenge. The aim of the competition is to promote the development and evaluation of language models in Spanish.</p>
+      <p><a href="https://leaderboard.odesia.uned.es/leaderboard/challenge">Competition Leaderboard</a></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img class="card-img" src="icons/Logotipo_del_Gobierno_Vasco.svg.png" alt="Egonlabur">
+    <div class="card-content">
+      <h3 class="card-title">Egonlabur: Grants for stays in centers other than the one in which the PhD is carried out</h3>
+      <p class="meta">Basque Government</p>
+      <p class="meta">Jan. 2022</p>
+      <p>Associated with UPV/EHU. Egonlabur grants for stays in centers other than the one in which the PhD is carried out. 3.475€</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img class="card-img" src="icons/udalbiltza-logo.png" alt="IkerGazte 2021 Prize">
+    <div class="card-content">
+      <h3 class="card-title">Prize for the most relevant research for the development of the Basque Country (IkerGazte 2021)</h3>
+      <p class="meta">Udabiltza</p>
+      <p class="meta">Jul. 2021</p>
+      <p>Associated with UPV/EHU. The paper "Twitterreko Euskal Komunitatearen Eduki Azterketa Pandemia Garaian" was awarded the prize for the most relevant research for the development of the Basque Country at IkerGazte 2021.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img class="card-img" src="icons/Logotipo_del_Gobierno_Vasco.svg.png" alt="Basque Government PhD grant">
+    <div class="card-content">
+      <h3 class="card-title">Basque Government PhD grant</h3>
+      <p class="meta">Basque Government</p>
+      <p class="meta">Jan. 2019</p>
+      <p>Associated with UPV/EHU.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img class="card-img" src="icons/upv_ehu_logo.jpeg" alt="UPV/EHU master's grant">
+    <div class="card-content">
+      <h3 class="card-title">Grants for university master's degrees at the UPV/EHU</h3>
+      <p class="meta">University of the Basque Country (UPV/EHU)</p>
+      <p class="meta">Jan. 2018</p>
+      <p>Associated with UPV/EHU. Amount: 3000€.</p>
     </div>
   </div>
 </div>
