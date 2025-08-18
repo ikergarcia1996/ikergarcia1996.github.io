@@ -38,73 +38,77 @@
       (function(){
         const header = document.querySelector('.page-header');
         if (!header) return;
-        let target = {x: 0.1, y: 0.2};
-        let current = {x: 0.1, y: 0.2};
+        const defaults = { x: 0.10, y: 0.20 };
+        let target = { x: defaults.x, y: defaults.y };
+        let current = { x: defaults.x, y: defaults.y };
         let interacting = false;
-        let lastMove = 0;
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let rafId = null;
 
         function lerp(a, b, t) { return a + (b - a) * t; }
 
-        function onMove(e){
-          const rect = header.getBoundingClientRect();
-          const px = (e.clientX - rect.left) / rect.width;
-          const py = (e.clientY - rect.top) / rect.height;
-          target.x = Math.max(0.02, Math.min(0.98, px));
-          target.y = Math.max(0.02, Math.min(0.98, py));
-          interacting = true;
-          lastMove = performance.now();
-          header.classList.add('is-interactive');
-        }
-
-        function tick(now){
-          // Autonomous drift (disabled if reduced-motion)
-          if (!interacting){
-            const t = now * 0.00006; // slow time base
-            const ampX = reduceMotion ? 0.015 : 0.05;
-            const ampY = reduceMotion ? 0.012 : 0.04;
-            const bx = 0.12 + ampX * Math.sin(t * 2.0);
-            const by = 0.22 + ampY * Math.cos(t * 1.4);
-            target.x = bx;
-            target.y = by;
-          }
-
-          // If user stopped moving for a while, fall back to drift
-          if (interacting && now - lastMove > 1200){
-            interacting = false;
-            header.classList.remove('is-interactive');
-          }
-
-          current.x = lerp(current.x, target.x, 0.06);
-          current.y = lerp(current.y, target.y, 0.06);
-          const g1x = (current.x * 100).toFixed(2) + '%';
-          const g1y = (current.y * 100).toFixed(2) + '%';
-          const g2x = (100 - current.x * 100).toFixed(2) + '%';
-          const g2y = (current.y * 100 * 0.7 + 10).toFixed(2) + '%';
-          const g3x = (50 + (current.x - 0.5) * 20).toFixed(2) + '%';
-          const g3y = (80 + (current.y - 0.5) * 20).toFixed(2) + '%';
+        function applyVars(x, y){
+          const g1x = (x * 100).toFixed(2) + '%';
+          const g1y = (y * 100).toFixed(2) + '%';
+          const g2x = (100 - x * 100).toFixed(2) + '%';
+          const g2y = (y * 100 * 0.7 + 10).toFixed(2) + '%';
+          const g3x = (50 + (x - 0.5) * 20).toFixed(2) + '%';
+          const g3y = (80 + (y - 0.5) * 20).toFixed(2) + '%';
           header.style.setProperty('--g1x', g1x);
           header.style.setProperty('--g1y', g1y);
           header.style.setProperty('--g2x', g2x);
           header.style.setProperty('--g2y', g2y);
           header.style.setProperty('--g3x', g3x);
           header.style.setProperty('--g3y', g3y);
-
-          requestAnimationFrame(tick);
         }
 
-        header.addEventListener('pointermove', onMove, { passive: true });
-        header.addEventListener('pointerleave', () => {
+        function tick(){
+          current.x = lerp(current.x, target.x, 0.14);
+          current.y = lerp(current.y, target.y, 0.14);
+          applyVars(current.x, current.y);
+          if (interacting) {
+            rafId = requestAnimationFrame(tick);
+          } else {
+            rafId = null;
+          }
+        }
+
+        function onEnter(){
+          if (!interacting){
+            interacting = true;
+            header.classList.add('is-interactive');
+            if (rafId == null) rafId = requestAnimationFrame(tick);
+          }
+        }
+
+        function onMove(e){
+          onEnter();
+          const rect = header.getBoundingClientRect();
+          const px = (e.clientX - rect.left) / rect.width;
+          const py = (e.clientY - rect.top) / rect.height;
+          target.x = Math.max(0.02, Math.min(0.98, px));
+          target.y = Math.max(0.02, Math.min(0.98, py));
+        }
+
+        function onLeave(){
           interacting = false;
           header.classList.remove('is-interactive');
-        });
+          target.x = defaults.x;
+          target.y = defaults.y;
+          current.x = defaults.x;
+          current.y = defaults.y;
+          applyVars(defaults.x, defaults.y);
+        }
+
+        header.addEventListener('pointerenter', onEnter, { passive: true });
+        header.addEventListener('pointermove', onMove, { passive: true });
+        header.addEventListener('pointerleave', onLeave);
         header.addEventListener('click', () => {
           header.classList.add('header--pulse');
           setTimeout(() => header.classList.remove('header--pulse'), 220);
         });
 
-        // Start loop (always)
-        requestAnimationFrame(tick);
+        // Initialize to defaults (no interaction)
+        applyVars(defaults.x, defaults.y);
       })();
     </script>
   </body>
