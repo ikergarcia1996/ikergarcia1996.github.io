@@ -117,7 +117,7 @@ filename: experience
       <h3 class="card-title">Egonlabur: Grants for stays in centers other than the one in which the PhD is carried out</h3>
       <p class="meta">Basque Government</p>
       <p class="meta">Jan. 2022</p>
-      <p>Associated with UPV/EHU. Egonlabur grants for stays in centers other than the one in which the PhD is carried out. 3.475€</p>
+      <p>Egonlabur grants for stays in centers other than the one in which the PhD is carried out. 3.475€</p>
     </div>
   </div>
 
@@ -127,7 +127,7 @@ filename: experience
       <h3 class="card-title">Prize for the most relevant research for the development of the Basque Country (IkerGazte 2021)</h3>
       <p class="meta">Udabiltza</p>
       <p class="meta">Jul. 2021</p>
-      <p>Associated with UPV/EHU. The paper "Twitterreko Euskal Komunitatearen Eduki Azterketa Pandemia Garaian" was awarded the prize for the most relevant research for the development of the Basque Country at IkerGazte 2021.</p>
+      <p>The paper "Twitterreko Euskal Komunitatearen Eduki Azterketa Pandemia Garaian" was awarded the prize for the most relevant research for the development of the Basque Country at IkerGazte 2021.</p>
     </div>
   </div>
 
@@ -137,7 +137,7 @@ filename: experience
       <h3 class="card-title">Basque Government PhD grant</h3>
       <p class="meta">Basque Government</p>
       <p class="meta">Jan. 2019</p>
-      <p>Associated with UPV/EHU.</p>
+      <p>4 year PhD grant.</p>
     </div>
   </div>
 
@@ -147,7 +147,7 @@ filename: experience
       <h3 class="card-title">Grants for university master's degrees at the UPV/EHU</h3>
       <p class="meta">University of the Basque Country (UPV/EHU)</p>
       <p class="meta">Jan. 2018</p>
-      <p>Associated with UPV/EHU. Amount: 3000€.</p>
+      <p>Amount: 3000€.</p>
     </div>
   </div>
 </div>
