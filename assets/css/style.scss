@@ -282,11 +282,10 @@ body {
 
 // Disable the drift while interacting (JS toggles this class)
 .page-header.is-interactive::after {
-  /* single, stronger purple glow following the pointer */
-  mix-blend-mode: normal;
+  /* single, large and soft bluish-purple glow following the pointer */
+  mix-blend-mode: soft-light;
   background:
-    radial-gradient(40% 60% at var(--g1x) var(--g1y), rgba(168, 85, 247, 0.40), transparent 55%),
-    radial-gradient(20% 30% at var(--g1x) var(--g1y), rgba(168, 85, 247, 0.60), transparent 35%);
+    radial-gradient(160% 120% at var(--g1x) var(--g1y), rgba(107, 91, 214, 0.28) 0%, rgba(107, 91, 214, 0.20) 35%, rgba(107, 91, 214, 0.10) 65%, transparent 85%);
 }
 
 // Click pulse feedback
