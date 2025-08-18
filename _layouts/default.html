@@ -50,18 +50,11 @@
         function lerp(a, b, t) { return a + (b - a) * t; }
 
         function applyVars(x, y){
-          const g1x = (x * 100).toFixed(2) + '%';
-          const g1y = (y * 100).toFixed(2) + '%';
-          const g2x = (100 - x * 100).toFixed(2) + '%';
-          const g2y = (y * 100 * 0.7 + 10).toFixed(2) + '%';
-          const g3x = (50 + (x - 0.5) * 20).toFixed(2) + '%';
-          const g3y = (80 + (y - 0.5) * 20).toFixed(2) + '%';
-          header.style.setProperty('--g1x', g1x);
-          header.style.setProperty('--g1y', g1y);
-          header.style.setProperty('--g2x', g2x);
-          header.style.setProperty('--g2y', g2y);
-          header.style.setProperty('--g3x', g3x);
-          header.style.setProperty('--g3y', g3y);
+          // compute a global light sweep angle (0-360) based on pointer
+          const angle = Math.atan2((y - 0.5), (x - 0.5)) * 180 / Math.PI + 180;
+          const hue = (x * 40 - 20) + (y * 20 - 10); // very subtle range ~[-30, 30]
+          header.style.setProperty('--angle', angle.toFixed(2) + 'deg');
+          header.style.setProperty('--hue', hue.toFixed(2) + 'deg');
         }
 
         function tick(){

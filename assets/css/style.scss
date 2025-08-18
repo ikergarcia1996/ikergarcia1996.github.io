@@ -53,6 +53,9 @@ body {
   --g2y: 15%;
   --g3x: 50%;
   --g3y: 85%;
+  /* defaults for global reactive overlay */
+  --angle: 120deg;
+  --hue: 0deg;
 }
 
 // Color gradient layer with slow hue rotation for visible movement
@@ -63,6 +66,7 @@ body {
   background: linear-gradient(120deg, rgba(14,111,131,0.55), rgba(11,61,145,0.55));
   mix-blend-mode: screen;
   pointer-events: none;
+  transition: filter 120ms linear;
 }
 
 @keyframes headerHue {
@@ -281,12 +285,16 @@ body {
 /* interactive drift removed; effect now only reacts to pointer */
 
 // Disable the drift while interacting (JS toggles this class)
+.page-header.is-interactive::before {
+  /* subtle hue shift applied globally while hovering */
+  filter: hue-rotate(var(--hue)) saturate(1.04);
+}
+
 .page-header.is-interactive::after {
-  /* large but clearly moving bluish-purple glow following the pointer */
-  mix-blend-mode: overlay;
+  /* subtle global directional highlight across the whole header */
   background:
-    radial-gradient(80% 60% at var(--g1x) var(--g1y), rgba(106, 90, 205, 0.22) 0%, rgba(106, 90, 205, 0.14) 40%, rgba(106, 90, 205, 0.06) 65%, transparent 78%);
-    /*radial-gradient(35% 25% at var(--g1x) var(--g1y), rgba(106, 90, 205, 0.20), transparent 55%);
+    linear-gradient(var(--angle), rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.00) 45%, rgba(0,0,0,0.06) 100%);
+  mix-blend-mode: soft-light;
 }
 
 // Click pulse feedback
