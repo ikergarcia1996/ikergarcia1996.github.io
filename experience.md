@@ -13,8 +13,14 @@ filename: experience
     <div class="card-content">
       <h3 class="card-title">LLM Researcher</h3>
       <p class="meta">Multiverse Computing</p>
-      <p class="meta">Jul. 2025 – present</p>
+      <p class="meta">Aug. 2025 – present</p>
       <p class="meta">Donostia - San Sebastián · Spain</p>
+      <ul>
+        <li>Developing compressed LLMs that make AI systems faster, cheaper, and more energy-efficient, including <a href="https://huggingface.co/MultiverseComputingCAI/Hypernova-60B-2602">Hypernova-60B</a>, a 60B-parameter model optimized for agentic workflows and tool use.</li>
+        <li>Developed a steering-vector method for editing LLM knowledge and behavior, including adding or removing censorship around sensitive topics while preserving model performance.</li>
+        <li>Optimized internal inference and fine-tuning codebases, achieving 3x faster logit precomputation and 5x faster KL-divergence training.</li>
+        <li>Built large-scale synthetic data generation pipelines for LLM training and evaluation.</li>
+      </ul>
     </div>
   </div>
 
@@ -25,6 +31,13 @@ filename: experience
       <p class="meta">Krea.ai</p>
       <p class="meta">Jan. 2025 – Jul. 2025</p>
       <p class="meta">San Francisco · US</p>
+      <ul>
+        <li>Contributed to the development of <a href="https://www.krea.ai/blog/flux-krea-open-source-release">FLUX.1 Krea</a>, a 22B diffusion-based image model trained in collaboration with Black Forest Labs.</li>
+        <li>Developed a personalized image recommendation engine using user interaction data and deep learning techniques.</li>
+        <li>Designed and trained SigLIP-style embedding models for artistic style-based image retrieval.</li>
+        <li>Improved fine-tuning codebases for video (Wan 2.1) and image (Flux) models, focusing on training performance and distributed training techniques such as FSDP2.</li>
+        <li>Implemented and deployed generative services for 3D models and textures, powering features used by thousands of users on the Krea platform.</li>
+      </ul>
     </div>
   </div>
 
@@ -46,9 +59,10 @@ filename: experience
     <div class="card-content">
       <h3 class="card-title">PhD in Natural Language Processing</h3>
       <p class="meta">HiTZ Zentroa</p>
-      <p class="meta">2020 – 2024</p>
+      <p class="meta">Jan. 2020 – Feb. 2025</p>
       <p class="meta">Donostia - San Sebastián · Spain</p>
       <ul>
+        <li><strong>Title:</strong> Acquisition and exploitation of Cross-Lingual knowledge</li>
         <li><strong>Advisors:</strong> German Rigau, Rodrigo Agerri</li>
       </ul>
     </div>
@@ -79,7 +93,7 @@ filename: experience
     <div class="card-content">
       <h3 class="card-title">Bachelor in Computer Science</h3>
       <p class="meta">University of the Basque Country UPV/EHU</p>
-      <p class="meta">2014 – 2017</p>
+      <p class="meta">2014 – 2018</p>
       <p class="meta">Donostia - San Sebastián · Spain</p>
     </div>
   </div>
@@ -108,6 +122,17 @@ filename: experience
       <p class="meta">Feb. 2025</p>
       <p>Winner of the ODESIA Challenge. The aim of the competition is to promote the development and evaluation of language models in Spanish.</p>
       <p><a href="https://leaderboard.odesia.uned.es/leaderboard/challenge">Competition Leaderboard</a></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img class="card-img" src="icons/somosnlp_nobg.png" alt="SomosNLP">
+    <div class="card-content">
+      <h3 class="card-title">Best Project Award @ SomosNLP 2024 Hackathon</h3>
+      <p class="meta">SomosNLP</p>
+      <p class="meta">2024</p>
+      <p>Best Project Award in the SomosNLP 2024 Hackathon for Clickbait Article Summarization in Spanish.</p>
+      <p><a href="https://somosnlp.org/hackathon">SomosNLP Hackathon</a></p>
     </div>
   </div>
 

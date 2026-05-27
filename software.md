@@ -9,6 +9,24 @@ filename: software
 
 <div class="grid">
   <div class="card">
+    <img class="card-img wide" src="icons/multiverse.png" alt="Hypernova-60B">
+    <div class="card-content">
+      <h3 class="card-title">Hypernova-60B</h3>
+      <p>A 60B-parameter compressed LLM optimized for agentic workflows and tool use, developed at Multiverse Computing.</p>
+      <p><a href="https://huggingface.co/MultiverseComputingCAI/Hypernova-60B-2602">Hugging Face Model</a></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <img class="card-img wide" src="icons/Krea.png" alt="FLUX.1 Krea">
+    <div class="card-content">
+      <h3 class="card-title">FLUX.1 Krea</h3>
+      <p>A 22B diffusion-based image model trained in collaboration with Black Forest Labs, offering superior aesthetic control and image quality. Fully compatible with FLUX.1-dev.</p>
+      <p><a href="https://www.krea.ai/blog/flux-krea-open-source-release">Blog Post</a> · <a href="https://huggingface.co/black-forest-labs/FLUX.1-Krea-dev">Hugging Face Model</a></p>
+    </div>
+  </div>
+
+  <div class="card">
     <img class="card-img wide" src="https://veridika.ai/logo.webp" alt="Veridika.ai">
     <div class="card-content">
       <h3 class="card-title">Veridika.ai</h3>

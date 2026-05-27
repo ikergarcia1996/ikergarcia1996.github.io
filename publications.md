@@ -10,6 +10,23 @@ filename: publications
 <div class="grid">
   <div class="card card-vertical">
     <div class="card-content">
+      <h3 class="card-title">Refusal Steering: Fine-grained Control over LLM Refusal Behaviour for Sensitive Topics</h3>
+      <p class="meta">LREC · 2026</p>
+      <p class="clamp-3"><ins>Iker García-Ferrero</ins>, David Montero, Roman Orus.</p>
+      <p>📖 <a href="https://arxiv.org/abs/2512.16602">Paper</a></p>
+    </div>
+  </div>
+
+  <div class="card card-vertical">
+    <div class="card-content">
+      <h3 class="card-title">FactOReS: Fact-checking with an Evidence-based Open Resource in Spanish</h3>
+      <p class="meta">LREC · 2026</p>
+      <p class="clamp-3">Nagore Bravo, Jaione Bengoetxea, <ins>Iker García-Ferrero</ins>, Alba Bonet Jover, Estela Saquete, Rodrigo Agerri.</p>
+    </div>
+  </div>
+
+  <div class="card card-vertical">
+    <div class="card-content">
       <h3 class="card-title">Releasing Open Weights for FLUX.1 Krea</h3>
       <p class="meta">Krea Blog · 2025</p>
       <p class="clamp-3">Sangwu Lee, Titus Ebbecke, Erwann Millon, Will Beddow, Le Zhuo, <ins>Iker García-Ferrero</ins>, Liam Esparraguera, Mihai Petrescu, Gian Saß, Gabriel Menezes, Victor Perez.</p>
@@ -21,9 +38,9 @@ filename: publications
   <div class="card card-vertical">
     <div class="card-content">
       <h3 class="card-title">Instructing LLMs for Low-Resource Languages: A Systematic Study for Basque</h3>
-      <p class="meta">arXiv · 2025</p>
+      <p class="meta">EMNLP · 2025</p>
       <p class="clamp-3">Oscar Sainz, Naiara Perez, Julen Etxaniz, Joseba Fernandez de Landa, Itziar Aldabe, <ins>Iker García-Ferrero</ins>, Aimar Zabala, Ekhi Azurmendi, German Rigau, Eneko Agirre, Mikel Artetxe, Aitor Soroa.</p>
-      <p>📖 <a href="https://arxiv.org/abs/2506.07597">Paper</a> · 📒 <a href="https://huggingface.co/collections/HiTZ/latxa-instruct-682f356091452b0028380804">Model</a></p>
+      <p>📖 <a href="https://aclanthology.org/2025.emnlp-main.1484/">Paper</a> · 📒 <a href="https://huggingface.co/collections/HiTZ/latxa-instruct-682f356091452b0028380804">Model</a></p>
     </div>
   </div>
 
