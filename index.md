@@ -68,7 +68,7 @@ permalink: /
   </div>
 
   <div class="card">
-    <img class="card-img" src="icons/Hitz.png" alt="Latxa">
+    <img class="card-img" src="icons/latxa.svg" alt="Latxa">
     <div class="card-content">
       <h3 class="card-title">Latxa</h3>
       <p class="meta">HiTZ · 2025</p>
@@ -78,7 +78,7 @@ permalink: /
   </div>
 
   <div class="card">
-    <img class="card-img" src="icons/Hitz.png" alt="Medical-mT5">
+    <img class="card-img" src="icons/medical-mt5.png" alt="Medical-mT5">
     <div class="card-content">
       <h3 class="card-title">Medical-mT5</h3>
       <p class="meta">HiTZ · 2024</p>
