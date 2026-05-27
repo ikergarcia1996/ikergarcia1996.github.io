@@ -1,111 +1,13 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: "en-US" }}">
-  <head>
-    <meta charset="UTF-8">
-
-{% seo %}
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#157878">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    <link rel="icon" href="{{ '/images/Iker-box.jpg' | relative_url }}" type="image/jpeg">
-    <link rel="shortcut icon" href="{{ '/images/Iker-box.jpg' | relative_url }}" type="image/jpeg">
-    <link rel="apple-touch-icon" href="{{ '/images/Iker-box.jpg' | relative_url }}">
-    {% include head-custom.html %}
-  </head>
+<html lang="{{ site.lang | default: 'en-US' }}" data-theme="light">
+  {% include head.html %}
   <body>
-    <a id="skip-to-content" href="#content">Skip to the content.</a>
-
-    <header class="page-header" role="banner">
-      <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
-      <nav aria-label="Primary">
-        {% assign current_url = page.url | relative_url %}
-        <a href="{{ '/' | relative_url }}" class="btn {% if current_url == '/' or current_url == '/index.html' or page.path == 'README.md' %}btn--active{% endif %}">About Me</a>
-        {% for nav_page in site.pages %}
-          {% if nav_page.button_title and nav_page.filename %}
-            <a href="{{ nav_page.filename | relative_url }}" class="btn {% if nav_page.path == page.path %}btn--active{% endif %}">{{ nav_page.button_title }}</a>
-          {% endif %}
-        {% endfor %}
-      </nav>
-    </header>
+    <a class="skip-link" href="#content">Skip to the content.</a>
+    {% include header.html %}
     <main id="content" class="main-content" role="main">
       {{ content }}
-
-       
-
     </main>
-
-    <script>
-      (function(){
-        const header = document.querySelector('.page-header');
-        if (!header) return;
-        const defaults = { x: 0.10, y: 0.20 };
-        let target = { x: defaults.x, y: defaults.y };
-        let current = { x: defaults.x, y: defaults.y };
-        let interacting = false;
-        let rafId = null;
-
-        function lerp(a, b, t) { return a + (b - a) * t; }
-
-        function applyVars(x, y){
-          // compute a global light sweep angle (0-360) based on pointer
-          const angle = Math.atan2((y - 0.5), (x - 0.5)) * 180 / Math.PI + 180;
-          const hue = (x * 40 - 20) + (y * 20 - 10); // very subtle range ~[-30, 30]
-          header.style.setProperty('--angle', angle.toFixed(2) + 'deg');
-          header.style.setProperty('--hue', hue.toFixed(2) + 'deg');
-        }
-
-        function tick(){
-          current.x = lerp(current.x, target.x, 0.35);
-          current.y = lerp(current.y, target.y, 0.35);
-          applyVars(current.x, current.y);
-          if (interacting) {
-            rafId = requestAnimationFrame(tick);
-          } else {
-            rafId = null;
-          }
-        }
-
-        function onEnter(){
-          if (!interacting){
-            interacting = true;
-            header.classList.add('is-interactive');
-            if (rafId == null) rafId = requestAnimationFrame(tick);
-          }
-        }
-
-        function onMove(e){
-          onEnter();
-          const rect = header.getBoundingClientRect();
-          const px = (e.clientX - rect.left) / rect.width;
-          const py = (e.clientY - rect.top) / rect.height;
-          target.x = Math.max(0.02, Math.min(0.98, px));
-          target.y = Math.max(0.02, Math.min(0.98, py));
-        }
-
-        function onLeave(){
-          interacting = false;
-          header.classList.remove('is-interactive');
-          target.x = defaults.x;
-          target.y = defaults.y;
-          current.x = defaults.x;
-          current.y = defaults.y;
-          applyVars(defaults.x, defaults.y);
-        }
-
-        header.addEventListener('pointerenter', onEnter, { passive: true });
-        header.addEventListener('pointermove', onMove, { passive: true });
-        header.addEventListener('pointerleave', onLeave);
-        header.addEventListener('click', () => {
-          header.classList.add('header--pulse');
-          setTimeout(() => header.classList.remove('header--pulse'), 220);
-        });
-
-        // Initialize to defaults (no interaction)
-        applyVars(defaults.x, defaults.y);
-      })();
-    </script>
+    {% include footer.html %}
+    <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
   </body>
 </html>

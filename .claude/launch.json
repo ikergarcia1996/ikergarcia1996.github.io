@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "site",
+      "runtimeExecutable": "docker",
+      "runtimeArgs": [
+        "run", "--rm", "--name", "iker-jekyll",
+        "-p", "4000:4000",
+        "-v", "/Users/iker.garcia/Documents/Iker-Garcia-Ferrero:/srv/jekyll",
+        "-w", "/srv/jekyll",
+        "jekyll/jekyll:4",
+        "sh", "-c",
+        "bundle install && bundle exec jekyll serve --host 0.0.0.0 --baseurl '' --watch --force_polling"
+      ],
+      "port": 4000
+    }
+  ]
+}

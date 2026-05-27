@@ -1,2 +1,60 @@
-theme: jekyll-theme-cayman
 title: Iker García-Ferrero
+tagline: LLM Researcher · Foundation models for language & vision
+description: >-
+  Iker García-Ferrero — LLM Researcher at Multiverse Computing. PhD in Natural
+  Language Processing. I train, compress, and optimize large-scale foundation
+  models for language and vision.
+author:
+  name: Iker García-Ferrero
+  twitter: iker_garciaf
+lang: en-US
+
+url: "https://ikergarcia1996.github.io"
+baseurl: "/Iker-Garcia-Ferrero"
+
+# Social / SEO
+twitter:
+  username: iker_garciaf
+  card: summary_large_image
+logo: /images/avatar.jpg
+social:
+  name: Iker García-Ferrero
+  links:
+    - https://twitter.com/iker_garciaf
+    - https://github.com/ikergarcia1996
+    - https://www.linkedin.com/in/iker-garc%C3%ADa-ferrero-75343b172/
+    - https://scholar.google.es/citations?user=yoOzj1MAAAAJ
+    - https://orcid.org/0000-0001-9612-7134
+
+# Primary navigation (order matters)
+nav:
+  - title: About
+    url: /
+  - title: Publications
+    url: /publications.html
+  - title: Software
+    url: /software.html
+  - title: Career
+    url: /experience.html
+  - title: Dissemination
+    url: /dissemination.html
+  - title: Blog
+    url: /blog.html
+
+plugins:
+  - jekyll-seo-tag
+
+# Default Open Graph / Twitter card image for link previews
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /images/avatar.jpg
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - scripts
+  - .mypy_cache
+  - vendor

@@ -1,5 +1,5 @@
 ---
-title: Iker García-Ferrero
+title: Blog
 button_title: Blog
 layout: default
 filename: blog

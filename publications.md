@@ -1,5 +1,5 @@
 ---
-title: Iker García-Ferrero
+title: Publications
 button_title: Publications
 layout: default
 filename: publications

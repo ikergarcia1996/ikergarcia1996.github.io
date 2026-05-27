@@ -1,3 +1,17 @@
 .idea/
-
+.vscode/
 .DS_Store
+
+# Jekyll
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+
+# Local build deps (Docker/bundler)
+vendor/
+.gems/
+Gemfile.lock
+
+# Tooling caches
+.mypy_cache/

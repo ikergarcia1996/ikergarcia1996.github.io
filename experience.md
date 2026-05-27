@@ -1,5 +1,5 @@
 ---
-title: Iker García-Ferrero
+title: Career
 button_title: Career
 layout: default
 filename: experience
@@ -99,7 +99,7 @@ filename: experience
   </div>
 </div>
 
-# Grants and Adwars
+# Grants and Awards
 
 <div class="grid">
 

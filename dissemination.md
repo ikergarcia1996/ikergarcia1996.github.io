@@ -1,5 +1,5 @@
 ---
-title: Iker García-Ferrero
+title: Scientific Dissemination
 button_title: Scientific Dissemination
 layout: default
 filename: dissemination
@@ -8,7 +8,7 @@ filename: dissemination
 # Scientific dissemination
 
 <div class="grid">
-  <div class="card">
+  <div class="card card-vertical">
     <img class="card-img wide" src="https://avatars.githubusercontent.com/u/148342272" alt="CONDA">
     <div class="card-content">
       <h3 class="card-title">The 1st Workshop on Data Contamination (CONDA)</h3>
@@ -18,7 +18,7 @@ filename: dissemination
     </div>
   </div>
 
-  <div class="card">
+  <div class="card card-vertical">
     <img class="card-img wide" src="icons/hardware360.jpeg" alt="Hardware 360º">
     <div class="card-content">
       <h3 class="card-title">Hardware 360º</h3>
@@ -32,7 +32,7 @@ filename: dissemination
     </div>
   </div>
 
-  <div class="card">
+  <div class="card card-vertical">
     <img class="card-img wide" src="http://www.ixa.eus/iltapp/images/hap_lap_bw.png" alt="ILTAPP">
     <div class="card-content">
       <h3 class="card-title">Instructor: Introduction to Language Technology Applications</h3>
