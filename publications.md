@@ -45,6 +45,15 @@ filename: publications
 
   <div class="card card-vertical">
     <div class="card-content">
+      <h3 class="card-title">Discriminative Benchmarking of Spanish Language Models: Findings from the ODESIA Challenge 2024</h3>
+      <p class="meta">PLN · 2026</p>
+      <p class="clamp-3">Alejandro Benito Santos, Roser Morante, Adrián Ghajari Espinosa, <ins>Iker García-Ferrero</ins>, Robiert Sepúlveda Torres, German Rigau, Rodrigo Agerri, et al.</p>
+      <p>📖 <a href="http://journal.sepln.org/sepln/ojs/ojs/index.php/pln/article/view/6841">Paper</a></p>
+    </div>
+  </div>
+
+  <div class="card card-vertical">
+    <div class="card-content">
       <h3 class="card-title">Releasing Open Weights for FLUX.1 Krea</h3>
       <p class="meta">Krea Blog · 2025</p>
       <p class="clamp-3">Sangwu Lee, Titus Ebbecke, Erwann Millon, Will Beddow, Le Zhuo, <ins>Iker García-Ferrero</ins>, Liam Esparraguera, Mihai Petrescu, Gian Saß, Gabriel Menezes, Victor Perez.</p>
@@ -91,6 +100,15 @@ filename: publications
 
   <div class="card card-vertical">
     <div class="card-content">
+      <h3 class="card-title">HiTZ@Disargue: Few-shot Learning and Argumentation to Detect and Fight Misinformation in Social Media</h3>
+      <p class="meta">SEPLN-CEDI-PD · 2024</p>
+      <p class="clamp-3">Rodrigo Agerri, Jeremy Barnes, Jaione Bengoetxea, Blanca Calvo Figueras, Joseba Fernandez de Landa, <ins>Iker García-Ferrero</ins>, Olia Toporkov, Irune Zubiaga.</p>
+      <p>📖 <a href="https://ceur-ws.org/Vol-3729/p28_rev.pdf">Paper</a></p>
+    </div>
+  </div>
+
+  <div class="card card-vertical">
+    <div class="card-content">
       <h3 class="card-title">Uncovering Social Changes of the Basque Twitter Community during COVID-19</h3>
       <p class="meta">SIGUL · 2024</p>
       <p class="clamp-3">Joseba Fernandez de Landa, <ins>Iker García-Ferrero</ins>, Ander Salaberria, Jon Ander Campos.</p>
@@ -104,6 +122,15 @@ filename: publications
       <p class="meta">PLN · 2024</p>
       <p class="clamp-3"><ins>Iker García-Ferrero</ins>, Begoña Altuna.</p>
       <p>📖 <a href="http://journal.sepln.org/sepln/ojs/ojs/index.php/pln/article/view/6610">Paper</a> · 📒 <a href="https://huggingface.co/datasets/Iker/NoticIA">Code</a></p>
+    </div>
+  </div>
+
+  <div class="card card-vertical">
+    <div class="card-content">
+      <h3 class="card-title">Prepare to be Amazed: NoticIA, the Spanish Clickbait Dataset Transforming the Way We Read News</h3>
+      <p class="meta">CLARIN Annual Conference · 2024</p>
+      <p class="clamp-3">Begoña Altuna, <ins>Iker García-Ferrero</ins>.</p>
+      <p>📖 <a href="https://www.clarin.eu/sites/default/files/04_-Altuna-Garci%CC%81a-Ferrero_CLARIN2024-Resources-and-Usage.pdf">Paper</a></p>
     </div>
   </div>
 
@@ -203,6 +230,15 @@ filename: publications
       <p class="meta">arXiv · 2020</p>
       <p class="clamp-3"><ins>Iker García-Ferrero</ins>, Rodrigo Agerri, German Rigau.</p>
       <p>📖 <a href="https://arxiv.org/abs/2001.06381">Paper</a> · 📒 <a href="https://github.com/ikergarcia1996/MVM-Embeddings">Code</a></p>
+    </div>
+  </div>
+
+  <div class="card card-vertical">
+    <div class="card-content">
+      <h3 class="card-title">Estudio de Word Embeddings y métodos de generación de Meta Embeddings</h3>
+      <p class="meta">Bachelor's thesis · 2018</p>
+      <p class="clamp-3"><ins>Iker García-Ferrero</ins>.</p>
+      <p>📖 <a href="https://addi.ehu.es/handle/10810/29088">Thesis</a> · 📒 <a href="https://github.com/ikergarcia1996/RotEmbeddings">Code</a></p>
     </div>
   </div>
 </div>
