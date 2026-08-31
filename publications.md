@@ -10,10 +10,28 @@ filename: publications
 <div class="grid">
   <div class="card card-vertical">
     <div class="card-content">
+      <h3 class="card-title">Quantization-Aware Healing: A Practical Recipe for Recovering Compressed, 4-Bit LLMs</h3>
+      <p class="meta">arXiv · 2026 (preprint)</p>
+      <p class="clamp-3">Bakbergen Ryskulov, <ins>Iker García-Ferrero</ins>, David Montero, David Jansen, Ali Hashemi, Jezabel R. Garcia, Antonio Tiene, Román Orús.</p>
+      <p>📖 <a href="https://arxiv.org/abs/2608.20953">Paper</a></p>
+    </div>
+  </div>
+
+  <div class="card card-vertical">
+    <div class="card-content">
+      <h3 class="card-title">Efficient Knowledge Distillation for LLMs: Offline Top-K Logits and a Fused Chunked KL Loss</h3>
+      <p class="meta">arXiv · 2026 (preprint)</p>
+      <p class="clamp-3">Bakbergen Ryskulov, <ins>Iker García-Ferrero</ins>, David Montero, David Jansen, Ali Hashemi, Jezabel R. Garcia, Antonio Tiene, Román Orús.</p>
+      <p>📖 <a href="https://arxiv.org/abs/2608.03796">Paper</a> · 📒 <a href="https://github.com/CompactifAI/Full-Chunked-KL-Loss">Code</a></p>
+    </div>
+  </div>
+
+  <div class="card card-vertical">
+    <div class="card-content">
       <h3 class="card-title">Refusal Steering: Fine-grained Control over LLM Refusal Behaviour for Sensitive Topics</h3>
       <p class="meta">LREC · 2026</p>
       <p class="clamp-3"><ins>Iker García-Ferrero</ins>, David Montero, Roman Orus.</p>
-      <p>📖 <a href="https://arxiv.org/abs/2512.16602">Paper</a></p>
+      <p>📖 <a href="https://arxiv.org/abs/2512.16602">Paper</a> · 📒 <a href="https://github.com/CompactifAI/LLM-Refusal-Evaluation">Code</a>  · 🤖 <a href="https://huggingface.co/MultiverseComputingCAI/Qwen3-Next-80B-A3B-Thinking-Uncensored">Model</a></p>
     </div>
   </div>
 

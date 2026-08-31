@@ -11,9 +11,22 @@ filename: experience
   <div class="card">
     <img class="card-img" src="icons/multiverse.png" alt="Multiverse Computing">
     <div class="card-content">
+      <h3 class="card-title">Senior LLM Researcher</h3>
+      <p class="meta">Multiverse Computing</p>
+      <p class="meta">Aug. 2026 – present</p>
+      <p class="meta">Donostia - San Sebastián · Spain</p>
+      <ul>
+        <li>Training large language models, from data acquisition and pipeline development to pre-training, fine-tuning, reinforcement learning, and optimization at scale.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <img class="card-img" src="icons/multiverse.png" alt="Multiverse Computing">
+    <div class="card-content">
       <h3 class="card-title">LLM Researcher</h3>
       <p class="meta">Multiverse Computing</p>
-      <p class="meta">Aug. 2025 – present</p>
+      <p class="meta">Aug. 2025 – Jul. 2026</p>
       <p class="meta">Donostia - San Sebastián · Spain</p>
       <ul>
         <li>Developing compressed LLMs that make AI systems faster, cheaper, and more energy-efficient, including <a href="https://huggingface.co/MultiverseComputingCAI/Hypernova-60B-2602">Hypernova-60B</a>, a 60B-parameter model optimized for agentic workflows and tool use.</li>

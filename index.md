@@ -6,7 +6,7 @@ permalink: /
 
 <section class="hero">
   <div class="hero-main">
-    <p class="lead">LLM Researcher at <a href="https://multiversecomputing.com">Multiverse Computing</a>. I train, compress, and optimize large-scale foundation models for both language and vision.</p>
+    <p class="lead">Senior LLM Researcher at <a href="https://multiversecomputing.com">Multiverse Computing</a>. I train, compress, and optimize large-scale foundation models for both language and vision.</p>
 
     <p>PhD in Natural Language Processing from the <a href="https://www.ehu.eus/en/en-home">University of the Basque Country UPV/EHU</a>, developed at the <a href="http://www.ixa.eus/?language=en">IXA Group</a> and the <a href="http://www.hitz.eus/">HiTZ Basque Center for Language Technologies</a>.</p>
 
@@ -18,7 +18,7 @@ permalink: /
   <aside class="hero-aside">
     <div class="profile-card">
       <img class="avatar" src="images/avatar.jpg" alt="Iker García-Ferrero portrait">
-      <p class="profile-role">LLM Researcher</p>
+      <p class="profile-role">Senior LLM Researcher</p>
       <p class="profile-meta"><a href="https://multiversecomputing.com">Multiverse Computing</a></p>
       <p class="profile-meta">Donostia–San Sebastián · Spain</p>
       <p class="profile-meta"><a href="mailto:igarciaf896@gmail.com">igarciaf896@gmail.com</a></p>
