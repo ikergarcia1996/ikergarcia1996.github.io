@@ -13,6 +13,16 @@ filename: blog
   <article class="card">
     <img class="card-img" src="icons/multiverse.png" alt="Multiverse Computing">
     <div class="card-content">
+      <h3 class="card-title">Safety for Whom? Refusing the Right Subset of a Topic, Not the Whole Topic</h3>
+      <p class="meta">Antonio Tiene, Alejo López-Ávila, <ins>Iker García-Ferrero</ins>.</p>
+      <p><strong>TL;DR</strong>: We study how to train LLMs to refuse harmful requests within a topic while still answering legitimate ones. Self-generated training data and harmful-benign prompt pairs help control that boundary, and evaluating both sides reveals the trade-off between safety and over-refusal.</p>
+      <p>📒 <a href="https://huggingface.co/blog/MultiverseComputingCAI/safety-for-whom">Blog Post</a> · 📖 <a href="https://arxiv.org/abs/2609.04482">Paper</a></p>
+    </div>
+  </article>
+
+  <article class="card">
+    <img class="card-img" src="icons/multiverse.png" alt="Multiverse Computing">
+    <div class="card-content">
       <h3 class="card-title">Quantization-Aware Healing: a compressed, 4-bit model that outperforms its full-precision original</h3>
       <p class="meta">Bakbergen Ryskulov, <ins>Iker García-Ferrero</ins>, David Montero, David Jansen, Ali Hashemi, Jezabel R. Garcia, Antonio Tiene, Román Orús.</p>
       <p><strong>TL;DR</strong>: Quantization-Aware Healing (QAH) distills a 4-bit compressed model directly from the original full-precision model instead of an already-degraded checkpoint, recovering a compressed LLM that matches or beats its full-precision source while using far fewer resources. Used to produce Hypernova-60B.</p>

@@ -10,6 +10,15 @@ filename: publications
 <div class="grid">
   <div class="card card-vertical">
     <div class="card-content">
+      <h3 class="card-title">Safety for Whom? Boundary-Aware Self-Distillation for Controlled LLM Safety Refusal</h3>
+      <p class="meta">arXiv · 2026 (preprint)</p>
+      <p class="clamp-3">Alejo López-Ávila, <ins>Iker García-Ferrero</ins>, Jezabel Garcia, Antonio Tiene, Román Orús.</p>
+      <p>📖 <a href="https://arxiv.org/abs/2609.04482">Paper</a> · 📒 <a href="https://huggingface.co/blog/MultiverseComputingCAI/safety-for-whom">Blog Post</a></p>
+    </div>
+  </div>
+
+  <div class="card card-vertical">
+    <div class="card-content">
       <h3 class="card-title">Quantization-Aware Healing: A Practical Recipe for Recovering Compressed, 4-Bit LLMs</h3>
       <p class="meta">arXiv · 2026 (preprint)</p>
       <p class="clamp-3">Bakbergen Ryskulov, <ins>Iker García-Ferrero</ins>, David Montero, David Jansen, Ali Hashemi, Jezabel R. Garcia, Antonio Tiene, Román Orús.</p>
