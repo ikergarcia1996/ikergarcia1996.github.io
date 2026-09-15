@@ -3,9 +3,16 @@ title: Career
 button_title: Career
 layout: default
 filename: experience
+page_class: career-page
 ---
 
-# Experience
+<div class="page-intro">
+  <h1>Career &amp; education</h1>
+  <p>Research, engineering, and teaching across foundation models and multilingual NLP.</p>
+  <a class="button" href="{{ '/assets/Iker-Garcia-Ferrero-CV.pdf' | relative_url }}">Download CV <span class="file-type">PDF</span></a>
+</div>
+
+## Experience & Education
 
 <div class="grid">
   <div class="card">
@@ -31,7 +38,7 @@ filename: experience
       <ul>
         <li>Developing compressed LLMs that make AI systems faster, cheaper, and more energy-efficient, including <a href="https://huggingface.co/MultiverseComputingCAI/Hypernova-60B-2602">Hypernova-60B</a>, a 60B-parameter model optimized for agentic workflows and tool use.</li>
         <li>Developed a steering-vector method for editing LLM knowledge and behavior, including adding or removing censorship around sensitive topics while preserving model performance.</li>
-        <li>Optimized internal inference and fine-tuning codebases, achieving 3x faster logit precomputation and 5x faster KL-divergence training.</li>
+        <li>Optimized internal inference and fine-tuning codebases, achieving 3× faster logit precomputation and 5× faster KL-divergence training in internal pipelines, relative to their prior implementations.</li>
         <li>Built large-scale synthetic data generation pipelines for LLM training and evaluation.</li>
       </ul>
     </div>
@@ -45,7 +52,7 @@ filename: experience
       <p class="meta">Jan. 2025 – Jul. 2025</p>
       <p class="meta">San Francisco · US</p>
       <ul>
-        <li>Contributed to the development of <a href="https://www.krea.ai/blog/flux-krea-open-source-release">FLUX.1 Krea</a>, a 22B diffusion-based image model trained in collaboration with Black Forest Labs.</li>
+        <li>Contributed to the development of <a href="https://www.krea.ai/blog/flux-krea-open-source-release">FLUX.1 Krea</a>, a diffusion-based image model trained in collaboration with Black Forest Labs.</li>
         <li>Developed a personalized image recommendation engine using user interaction data and deep learning techniques.</li>
         <li>Designed and trained SigLIP-style embedding models for artistic style-based image retrieval.</li>
         <li>Improved fine-tuning codebases for video (Wan 2.1) and image (Flux) models, focusing on training performance and distributed training techniques such as FSDP2.</li>
@@ -63,6 +70,7 @@ filename: experience
       <p class="meta">Philadelphia · US</p>
       <ul>
         <li><strong>Advisor:</strong> Dan Roth</li>
+        <li>Developed multilingual named entity recognition using Wikipedia and Wikidata, and worked on T-Projection for cross-lingual annotation projection.</li>
       </ul>
     </div>
   </div>
@@ -112,7 +120,7 @@ filename: experience
   </div>
 </div>
 
-# Grants and Awards
+## Grants and Awards
 
 <div class="grid">
 

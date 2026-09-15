@@ -1,0 +1,489 @@
+[
+  {
+    "id": "publication-1",
+    "title": "Safety for Whom? Boundary-Aware Self-Distillation for Controlled LLM Safety Refusal",
+    "venue": "arXiv · 2026 (preprint)",
+    "year": 2026,
+    "authors": "Alejo López-Ávila, Iker García-Ferrero, Jezabel Garcia, Antonio Tiene, Román Orús.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/2609.04482"
+      },
+      {
+        "label": "Blog Post",
+        "url": "https://huggingface.co/blog/MultiverseComputingCAI/safety-for-whom"
+      }
+    ],
+    "language": "en",
+    "selected": true,
+    "summary": "Training models to refuse harmful requests within a topic while preserving useful answers to benign ones. We study how self-generated data and harmful-benign prompt pairs shape this boundary."
+  },
+  {
+    "id": "publication-2",
+    "title": "Quantization-Aware Healing: A Practical Recipe for Recovering Compressed, 4-Bit LLMs",
+    "venue": "arXiv · 2026 (preprint)",
+    "year": 2026,
+    "authors": "Bakbergen Ryskulov, Iker García-Ferrero, David Montero, David Jansen, Ali Hashemi, Jezabel R. Garcia, Antonio Tiene, Román Orús.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/2608.20953"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-3",
+    "title": "Efficient Knowledge Distillation for LLMs: Offline Top-K Logits and a Fused Chunked KL Loss",
+    "venue": "arXiv · 2026 (preprint)",
+    "year": 2026,
+    "authors": "Bakbergen Ryskulov, Iker García-Ferrero, David Montero, David Jansen, Ali Hashemi, Jezabel R. Garcia, Antonio Tiene, Román Orús.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/2608.03796"
+      },
+      {
+        "label": "Code",
+        "url": "https://github.com/CompactifAI/Full-Chunked-KL-Loss"
+      }
+    ],
+    "language": "en",
+    "selected": true,
+    "summary": "Offline top-K teacher logits and a fused, chunked KL loss reduce the memory and computation needed for LLM distillation."
+  },
+  {
+    "id": "publication-4",
+    "title": "Refusal Steering: Fine-grained Control over LLM Refusal Behaviour for Sensitive Topics",
+    "venue": "LREC · 2026",
+    "year": 2026,
+    "authors": "Iker García-Ferrero, David Montero, Roman Orus.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/2512.16602"
+      },
+      {
+        "label": "Code",
+        "url": "https://github.com/CompactifAI/LLM-Refusal-Evaluation"
+      },
+      {
+        "label": "Model",
+        "url": "https://huggingface.co/MultiverseComputingCAI/Qwen3-Next-80B-A3B-Thinking-Uncensored"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-5",
+    "title": "FactOReS: Fact-checking with an Evidence-based Open Resource in Spanish",
+    "venue": "LREC · 2026",
+    "year": 2026,
+    "authors": "Nagore Bravo, Jaione Bengoetxea, Iker García-Ferrero, Alba Bonet Jover, Estela Saquete, Rodrigo Agerri.",
+    "links": [],
+    "language": "en"
+  },
+  {
+    "id": "publication-6",
+    "title": "Discriminative Benchmarking of Spanish Language Models: Findings from the ODESIA Challenge 2024",
+    "venue": "PLN · 2026",
+    "year": 2026,
+    "authors": "Alejandro Benito Santos, Roser Morante, Adrián Ghajari Espinosa, Iker García-Ferrero, Robiert Sepúlveda Torres, German Rigau, Rodrigo Agerri, et al.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "http://journal.sepln.org/sepln/ojs/ojs/index.php/pln/article/view/6841"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-7",
+    "title": "Releasing Open Weights for FLUX.1 Krea",
+    "venue": "Krea Blog · 2025",
+    "year": 2025,
+    "authors": "Sangwu Lee, Titus Ebbecke, Erwann Millon, Will Beddow, Le Zhuo, Iker García-Ferrero, Liam Esparraguera, Mihai Petrescu, Gian Saß, Gabriel Menezes, Victor Perez.",
+    "links": [
+      {
+        "label": "Blog",
+        "url": "https://www.krea.ai/blog/flux-krea-open-source-release"
+      },
+      {
+        "label": "Model",
+        "url": "https://huggingface.co/black-forest-labs/FLUX.1-Krea-dev"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-8",
+    "title": "Instructing LLMs for Low-Resource Languages: A Systematic Study for Basque",
+    "venue": "EMNLP · 2025",
+    "year": 2025,
+    "authors": "Oscar Sainz, Naiara Perez, Julen Etxaniz, Joseba Fernandez de Landa, Itziar Aldabe, Iker García-Ferrero, Aimar Zabala, Ekhi Azurmendi, German Rigau, Eneko Agirre, Mikel Artetxe, Aitor Soroa.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://aclanthology.org/2025.emnlp-main.1484/"
+      },
+      {
+        "label": "Models",
+        "url": "https://huggingface.co/collections/HiTZ/latxa-instruct-682f356091452b0028380804"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-9",
+    "title": "GuideX: Guided Synthetic Data Generation for Zero-Shot IE",
+    "venue": "Findings of ACL · 2025",
+    "year": 2025,
+    "authors": "Neil De La Fuente, Oscar Sainz, Iker García-Ferrero, Eneko Agirre.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://aclanthology.org/2025.findings-acl.1245/"
+      },
+      {
+        "label": "Code",
+        "url": "https://github.com/Neilus03/GUIDEX"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-10",
+    "title": "Cross-Lingual Transfer for Low-Resource Natural Language Processing",
+    "venue": "Doctoral thesis · 2025",
+    "year": 2025,
+    "authors": "Iker García-Ferrero",
+    "links": [
+      {
+        "label": "Thesis",
+        "url": "https://arxiv.org/abs/2502.02722"
+      },
+      {
+        "label": "Slides",
+        "url": "http://ixa.si.ehu.es/sites/default/files/dokumentuak/14175/Tesi_aurkezpena___Iker_García.pdf"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-11",
+    "title": "Data Contamination Report from the 2024 CONDA Shared Task",
+    "venue": "CONDA Workshop · 2024",
+    "year": 2024,
+    "authors": "Oscar Sainz, Iker García-Ferrero, Alon Jacovi, Jon Ander Campos, Yanai Elazar, Eneko Agirre, Yoav Goldberg.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://aclanthology.org/2024.conda-1.4/"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-12",
+    "title": "HiTZ@Disargue: Few-shot Learning and Argumentation to Detect and Fight Misinformation in Social Media",
+    "venue": "SEPLN-CEDI-PD · 2024",
+    "year": 2024,
+    "authors": "Rodrigo Agerri, Jeremy Barnes, Jaione Bengoetxea, Blanca Calvo Figueras, Joseba Fernandez de Landa, Iker García-Ferrero, Olia Toporkov, Irune Zubiaga.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://ceur-ws.org/Vol-3729/p28_rev.pdf"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-13",
+    "title": "Uncovering Social Changes of the Basque Twitter Community during COVID-19",
+    "venue": "SIGUL · 2024",
+    "year": 2024,
+    "authors": "Joseba Fernandez de Landa, Iker García-Ferrero, Ander Salaberria, Jon Ander Campos.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://aclanthology.org/2024.sigul-1.44/"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-14",
+    "title": "NoticIA: A Clickbait Article Summarization Dataset in Spanish",
+    "venue": "PLN · 2024",
+    "year": 2024,
+    "authors": "Iker García-Ferrero, Begoña Altuna.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "http://journal.sepln.org/sepln/ojs/ojs/index.php/pln/article/view/6610"
+      },
+      {
+        "label": "Dataset",
+        "url": "https://huggingface.co/datasets/Iker/NoticIA"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-15",
+    "title": "Prepare to be Amazed: NoticIA, the Spanish Clickbait Dataset Transforming the Way We Read News",
+    "venue": "CLARIN Annual Conference · 2024",
+    "year": 2024,
+    "authors": "Begoña Altuna, Iker García-Ferrero.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://www.clarin.eu/sites/default/files/04_-Altuna-Garci%CC%81a-Ferrero_CLARIN2024-Resources-and-Usage.pdf"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-16",
+    "title": "MedicalMT5: An Open-Source Multilingual Text-to-Text LLM for the Medical Domain",
+    "venue": "LREC-COLING · 2024",
+    "year": 2024,
+    "authors": "Iker García-Ferrero, Rodrigo Agerri, Aitziber Atutxa Salazar, Elena Cabrio, Iker de la Iglesia, Alberto Lavelli, Bernardo Magnini, Benjamin Molinet, Johana Ramirez-Romero, German Rigau, Jose Maria Villa-Gonzalez, Serena Villata, Andrea Zaninello.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://aclanthology.org/2024.lrec-main.974/"
+      },
+      {
+        "label": "Models",
+        "url": "https://huggingface.co/collections/HiTZ/antidote-project-6601973d7d7b55302c1e606d"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-17",
+    "title": "GoLLIE: Annotation Guidelines improve Zero-Shot IE",
+    "venue": "ICLR · 2024",
+    "year": 2024,
+    "authors": "Oscar Sainz, Iker García-Ferrero, Rodrigo Agerri, Oier Lopez de Lacalle, German Rigau, Eneko Agirre.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://openreview.net/forum?id=Y3wpuxd7u9"
+      },
+      {
+        "label": "Code",
+        "url": "https://github.com/hitz-zentroa/GoLLIE/"
+      }
+    ],
+    "language": "en",
+    "selected": true,
+    "summary": "A language model that follows annotation guidelines to extract information, including schemas it has not seen during training."
+  },
+  {
+    "id": "publication-18",
+    "title": "This is not a Dataset: A Large Negation Benchmark to Challenge LLMs",
+    "venue": "EMNLP · 2023",
+    "year": 2023,
+    "authors": "Iker García-Ferrero, Begoña Altuna, Javier Alvez, Itziar Gonzalez-Dios, German Rigau.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://aclanthology.org/2023.emnlp-main.531"
+      },
+      {
+        "label": "Code",
+        "url": "https://github.com/hitz-zentroa/This-is-not-a-Dataset"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-19",
+    "title": "T-Projection: High Quality Annotation Projection for Sequence Labeling Tasks",
+    "venue": "Findings of EMNLP · 2023",
+    "year": 2023,
+    "authors": "Iker García-Ferrero, Rodrigo Agerri, German Rigau.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://aclanthology.org/2023.findings-emnlp.1015/"
+      },
+      {
+        "label": "Code",
+        "url": "https://github.com/ikergarcia1996/T-Projection"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-20",
+    "title": "NLP Evaluation in trouble: On the Need to Measure LLM Data Contamination",
+    "venue": "Findings of EMNLP · 2023",
+    "year": 2023,
+    "authors": "Oscar Sainz, Jon Ander Campos, Iker García-Ferrero, Julen Etxaniz, Oier Lopez de Lacalle, Eneko Agirre.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://aclanthology.org/2023.findings-emnlp.722/"
+      },
+      {
+        "label": "Code",
+        "url": "https://hitz-zentroa.github.io/lm-contamination/"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-21",
+    "title": "IXA/Cogcomp at SemEval-2023 Task 2: Context-enriched Multilingual NER using KBs",
+    "venue": "SemEval · 2023",
+    "year": 2023,
+    "authors": "Iker García-Ferrero, Jon Ander Campos, Oscar Sainz, Ander Salaberria, Dan Roth.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://aclanthology.org/2023.semeval-1.186/"
+      },
+      {
+        "label": "Code",
+        "url": "https://github.com/ikergarcia1996/Context-enriched-NER"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-22",
+    "title": "HiTZ@ Antidote: Explainable AI for Digital Medicine",
+    "venue": "SEPLN · 2023",
+    "year": 2023,
+    "authors": "Rodrigo Agerri, Iñigo Alonso, Aitziber Atutxa, Ander Berrondo, Ainara Estarrona, Iker García-Ferrero, Iakes Goenaga, Koldo Gojenola, Maite Oronoz, Igor Perez-Tejedor, German Rigau, Anar Yeginbergenova.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://ceur-ws.org/Vol-3516/paper14.pdf"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-23",
+    "title": "Acquisition and Exploitation of Cross-Lingual Knowledge",
+    "venue": "CEUR Workshop · 2022",
+    "year": 2022,
+    "authors": "Iker García-Ferrero.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://ceur-ws.org/Vol-3270/paper3.pdf"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-24",
+    "title": "Model Transfer or Data Transfer? Cross-Lingual Sequence Labelling in Zero-Resource Settings",
+    "venue": "Findings of EMNLP · 2022",
+    "year": 2022,
+    "authors": "Iker García-Ferrero, Rodrigo Agerri, German Rigau.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://aclanthology.org/2022.findings-emnlp.478/"
+      },
+      {
+        "label": "Code",
+        "url": "https://github.com/ikergarcia1996/Easy-Label-Projection"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-25",
+    "title": "Benchmarking Meta-embeddings: What Works and What Does Not",
+    "venue": "Findings of EMNLP · 2021",
+    "year": 2021,
+    "authors": "Iker García-Ferrero, Rodrigo Agerri, German Rigau.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://aclanthology.org/2021.findings-emnlp.333"
+      },
+      {
+        "label": "Code",
+        "url": "https://github.com/ikergarcia1996/MetaVec"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-26",
+    "title": "A Common Semantic Space for Monolingual and Cross-Lingual Meta-Embeddings",
+    "venue": "arXiv · 2020",
+    "year": 2020,
+    "authors": "Iker García-Ferrero, Rodrigo Agerri, German Rigau.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/2001.06381"
+      },
+      {
+        "label": "Code",
+        "url": "https://github.com/ikergarcia1996/MVM-Embeddings"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-27",
+    "title": "Estudio de Word Embeddings y métodos de generación de Meta Embeddings",
+    "venue": "Bachelor's thesis · 2018",
+    "year": 2018,
+    "authors": "Iker García-Ferrero.",
+    "links": [
+      {
+        "label": "Thesis",
+        "url": "https://addi.ehu.es/handle/10810/29088"
+      },
+      {
+        "label": "Code",
+        "url": "https://github.com/ikergarcia1996/RotEmbeddings"
+      }
+    ],
+    "language": "en"
+  },
+  {
+    "id": "publication-28",
+    "title": "Itzulpen Automatikoko Sistemen Analisia: Genero Alborapenaren Kasua",
+    "venue": "IkerGazte · 2021",
+    "year": 2021,
+    "authors": "Ander Salaberria, Jon Ander Campos, Iker García-Ferrero, Joseba Fernandez de Landa.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "http://www.ixa.eus/sites/default/files/dokumentuak/13328/Itzulpen_automatikoko_sistemen_joeraren_analisia__generoaren_kasua.pdf"
+      }
+    ],
+    "language": "eu"
+  },
+  {
+    "id": "publication-29",
+    "title": "Twitterreko Euskal Komunitatearen Eduki Azterketa Pandemia Garaian",
+    "venue": "IkerGazte · 2021",
+    "year": 2021,
+    "authors": "Joseba Fernandez de Landa, Iker García-Ferrero, Ander Salaberria, Jon Ander Campos.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "http://ixa.si.ehu.eus/sites/default/files/dokumentuak/13327/Sare_sozialen_analisia_pandemia_garaian.pdf"
+      },
+      {
+        "label": "Code",
+        "url": "https://github.com/ikergarcia1996/Ikergazte-Covid-Twitter-2021"
+      }
+    ],
+    "language": "eu"
+  }
+]

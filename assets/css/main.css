@@ -1,10 +1,11 @@
 /* ===========================================================================
    Iker García-Ferrero — personal site
-   Refined-modern design system with light/dark theming.
+   Original blue theme, with shared model cards and readable archives.
    =========================================================================== */
 
 /* ---- Design tokens --------------------------------------------------------- */
 :root {
+  color-scheme: light;
   --brand-1: #0e6f83;
   --brand-2: #0b3d91;
 
@@ -34,6 +35,7 @@
 }
 
 [data-theme="dark"] {
+  color-scheme: dark;
   --brand-1: #12a0bb;
   --brand-2: #3f6fd1;
 
@@ -80,6 +82,15 @@ body {
 img {
   max-width: 100%;
 }
+[hidden] { display: none !important; }
+button, input { font: inherit; }
+button, summary { cursor: pointer; }
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible {
+  outline: 3px solid var(--link);
+  outline-offset: 4px;
+}
+.page-header a:focus-visible, .page-header button:focus-visible { outline-color: white; }
+section[id] { scroll-margin-top: 1.5rem; }
 
 a {
   color: var(--link);
@@ -346,7 +357,7 @@ a:hover {
   margin-bottom: 0.3rem;
 }
 
-.card-title {
+.main-content .card-title {
   margin: 0 0 0.3rem;
   font-size: 1.08rem;
   font-weight: 700;
@@ -362,6 +373,7 @@ a:hover {
   font-size: 0.92rem;
   margin: 0 0 0.35rem;
 }
+.main-content p.meta { margin-bottom: 0.35rem; }
 
 .clamp-2,
 .clamp-3 {
@@ -394,7 +406,9 @@ ins {
   justify-content: space-between;
   gap: 1rem;
   flex-wrap: wrap;
+  margin-bottom: 1.25rem;
 }
+.main-content .section-head h2 { margin: 0; }
 .section-head .more-link {
   font-size: 0.95rem;
   font-weight: 600;
@@ -435,7 +449,8 @@ ins {
 
 .avatar {
   width: 100%;
-  max-width: 220px;
+  max-width: 190px;
+  height: auto;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 16px;
@@ -448,6 +463,8 @@ ins {
   font-weight: 700;
   color: var(--heading);
 }
+.main-content .profile-role { margin: 0.9rem 0 0.2rem; }
+.main-content .profile-meta { margin: 0.15rem 0; }
 .profile-meta {
   margin: 0.15rem 0;
   font-size: 0.92rem;
@@ -455,19 +472,20 @@ ins {
 }
 
 .badges {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   justify-content: center;
-  gap: 0.55rem;
+  gap: 0.35rem;
   margin-top: 1rem;
 }
 .badge-icon {
-  width: 46px;
-  height: 46px;
-  border-radius: 10px;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 8px;
   background: #fff;
   border: 1px solid var(--border);
-  padding: 6px;
+  padding: 4px;
   box-shadow: var(--shadow-sm);
   transition: transform 0.14s ease, box-shadow 0.14s ease;
 }
@@ -478,6 +496,174 @@ ins {
 
 .lead {
   font-size: 1.08rem;
+}
+
+/* ---- Small additions to the original layout -------------------------------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  min-height: 42px;
+  padding: .5rem .9rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elev);
+  color: var(--link);
+  font-size: .85rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+.button:hover { border-color: var(--link); text-decoration: none; background: var(--chip-bg); }
+.file-type { font-size: .67rem; letter-spacing: .04em; color: var(--text-muted); }
+.profile-cv { margin-top: .85rem; width: 100%; }
+.profile-hf { display: inline-block; margin-top: .8rem; font-size: .85rem; }
+.home-section { margin-top: 3rem; }
+.more-link { font-weight: 600; font-size: .9rem; }
+.eyebrow { color: var(--text-muted); font-size: .8rem; font-weight: 600; }
+
+/* Familiar model logos, clear descriptions, and consistent resource buttons. */
+.project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+.project-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1.4rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+@media (hover: hover) {
+  .project-card:hover {
+    border-color: color-mix(in srgb, var(--brand-1) 40%, var(--border));
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+}
+.project-heading { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.project-heading > div { min-width: 0; }
+.project-logo { width: 64px; height: 64px; flex: 0 0 64px; object-fit: contain; padding: 6px; border: 1px solid var(--border); border-radius: 12px; background: white; }
+.main-content .project-heading h3 { margin: 0 0 .35rem; font-size: 1.14rem; line-height: 1.3; }
+.main-content .project-heading .meta { margin: 0; font-size: .79rem; line-height: 1.5; }
+.project-card > p { font-size: .95rem; line-height: 1.65; }
+.project-card .contribution { border-top: 1px solid var(--border); padding-top: 1rem; color: var(--text-muted); font-size: .85rem; }
+.contribution strong { display: block; margin-bottom: .3rem; color: var(--heading); }
+.resource-links { display: flex; flex-wrap: wrap; gap: .5rem; }
+.resource-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  min-height: 38px;
+  padding: .35rem .7rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--link);
+  background: var(--chip-bg);
+  font-size: .78rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.resource-links a:hover { color: var(--link-hover); border-color: var(--link); }
+.resource-links a span { font-size: 1rem; line-height: 1; }
+.project-card .resource-links { margin-top: auto; padding-top: .3rem; }
+
+/* Career timeline and contact from the newer design. */
+.background-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2.5rem; }
+.timeline { margin: .4rem 0 0 .3rem; padding: 0 0 0 1.4rem; list-style: none; border-left: 2px solid var(--border); }
+.timeline li { position: relative; padding: 0 0 1.5rem; }
+.timeline li:last-child { padding-bottom: 0; }
+.timeline li::before { content: ""; position: absolute; left: -1.75rem; top: .5rem; width: 10px; height: 10px; border-radius: 50%; background: var(--brand-1); box-shadow: 0 0 0 4px var(--bg); }
+.main-content .timeline h3 { margin: .3rem 0 .5rem; font-size: 1.05rem; line-height: 1.4; }
+.timeline .meta { font-size: .78rem; }
+.timeline p, .background-note p { font-size: .9rem; }
+.timeline p:last-child { margin: 0; }
+.background-note { padding: 1.4rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-elev); align-self: start; }
+.main-content .background-note h3 { margin: 0 0 1rem; font-size: 1.1rem; }
+.contact-section { margin-top: 3rem; padding: 2.5rem 0 1rem; border-top: 1px solid var(--border); }
+.main-content .contact-section h2 { margin: 0 0 .8rem; font-size: clamp(1.6rem, 4vw, 2.1rem); }
+.contact-section > p { color: var(--text-muted); }
+.contact-email { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 600; overflow-wrap: anywhere; }
+
+/* Full publication and writing pages remain directly accessible from the tabs. */
+.page-intro { margin-bottom: 2rem; max-width: 48rem; }
+.page-intro > p { color: var(--text-muted); }
+.publication-search { max-width: 43rem; margin-bottom: 1.25rem; }
+.publication-search label { display: block; font-size: .85rem; font-weight: 600; margin-bottom: .5rem; }
+.search-controls { display: flex; gap: .6rem; }
+.search-controls input { min-width: 0; width: 100%; padding: .65rem .85rem; background: var(--bg-elev); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.search-controls button { color: var(--link); background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: .5rem .85rem; }
+.search-controls button:hover { border-color: var(--link); }
+.main-content #search-status { margin: .4rem 0 0; min-height: 1.5rem; font-size: .78rem; }
+.year-nav { display: flex; flex-wrap: wrap; gap: .5rem; }
+.year-nav a { display: inline-block; padding: .35rem .85rem; border: 1px solid var(--border); border-radius: 99px; background: var(--bg-elev); font-size: .85rem; font-weight: 600; }
+.publication-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+.publication { min-width: 0; padding: 1.35rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-elev); box-shadow: var(--shadow-sm); }
+.main-content .publication h3 { font-size: 1.06rem; line-height: 1.45; margin: 0 0 .65rem; }
+.publication h3 a, .writing-item h3 a { color: var(--heading); }
+.publication h3 a:hover, .writing-item h3 a:hover { color: var(--link); }
+.main-content .publication-venue { color: var(--brand-1); font-size: .77rem; font-weight: 600; margin-bottom: .5rem; }
+.authors { color: var(--text-muted); font-size: .78rem; line-height: 1.65; }
+.authors strong { color: var(--heading); }
+.research-summary { margin-top: .8rem; font-size: .85rem; }
+.research-summary summary { color: var(--link); }
+.research-summary p { padding-top: .6rem; }
+.writing-list { display: grid; gap: 1.25rem; }
+.writing-item { padding: 1.4rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-elev); box-shadow: var(--shadow-sm); }
+.main-content .writing-item h3 { font-size: 1.15rem; line-height: 1.4; margin: .5rem 0 .75rem; }
+.writing-item > .meta { font-size: .8rem; }
+.writing-item p { font-size: .92rem; }
+.writing-item .authors { font-size: .8rem; }
+.career-page .grid { grid-template-columns: 1fr; }
+.career-page .card { padding: 1.4rem; }
+.card-img.wide { object-fit: contain; }
+.card-content p, .card-content li { font-size: .93rem; }
+
+/* Outreach logos sit directly on the card instead of oversized white panels. */
+.outreach-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+.outreach-card { display: flex; flex-direction: column; min-width: 0; padding: 1.4rem; background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); }
+.outreach-brand { display: flex; align-items: center; height: 64px; margin-bottom: 1.25rem; }
+.outreach-logo { display: block; width: 64px; height: 64px; object-fit: contain; border-radius: 10px; }
+.outreach-logo-wordmark { width: auto; max-width: 100%; border-radius: 0; }
+.outreach-logo-hitz { width: 240px; mix-blend-mode: multiply; }
+[data-theme="dark"] .outreach-logo-hitz { filter: invert(1) grayscale(1); mix-blend-mode: screen; }
+.main-content .outreach-card h2 { margin: 0 0 .65rem; font-size: 1.12rem; line-height: 1.4; }
+.main-content .outreach-card .meta { margin-bottom: .85rem; font-size: .8rem; }
+.outreach-card > p { font-size: .93rem; }
+.outreach-card .resource-links { margin-top: auto; padding-top: .4rem; }
+
+@media (max-width: 48em) {
+  .nav-link { padding: .45rem .8rem; font-size: .85rem; min-height: 40px; }
+  .theme-toggle { width: 40px; height: 40px; }
+  .hero { gap: 1.5rem; }
+  .profile-card { display: grid; grid-template-columns: 100px minmax(0, 1fr); column-gap: 1rem; text-align: left; }
+  .avatar { grid-column: 1; grid-row: 1 / 5; width: 100px; height: 100px; border-width: 0; border-radius: 10px; }
+  .profile-card > p { grid-column: 2; }
+  .main-content .profile-role { margin: 0 0 .2rem; }
+  .profile-meta { font-size: .8rem; }
+  .profile-cv, .badges, .profile-hf { grid-column: 1 / -1; justify-self: center; }
+  .profile-cv { width: auto; }
+  .badges { margin-top: .85rem; width: 100%; max-width: 17rem; }
+  .badge-icon { width: 100%; height: auto; }
+  .background-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+@media (max-width: 620px) {
+  .project-grid, .publication-list, .outreach-grid { grid-template-columns: 1fr; }
+  .project-card, .publication, .writing-item, .outreach-card { padding: 1.2rem; }
+  .project-heading { gap: .85rem; }
+  .project-logo { width: 58px; height: 58px; flex-basis: 58px; }
+  .home-section { margin-top: 2.25rem; }
+  .section-head { gap: .75rem; }
+  .contact-section { margin-top: 2.25rem; padding-top: 2rem; }
+  .career-page .card { gap: .9rem; padding: 1.1rem; }
+  .career-page .card-img { width: 54px; height: 54px; flex-basis: 54px; }
+}
+@media print {
+  .page-header, .site-footer, .publication-search, .year-nav, .profile-cv { display: none; }
+  body { background: white; color: black; }
+  .main-content { max-width: none; margin: 0; padding: 0; }
+  .project-card, .publication, .card, .outreach-card { break-inside: avoid; box-shadow: none; }
 }
 
 /* ---- Footer ---------------------------------------------------------------- */
@@ -491,17 +677,6 @@ ins {
   margin: 0 auto;
   padding: 1.75rem 2rem;
   text-align: center;
-}
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem 1.25rem;
-  margin-bottom: 0.6rem;
-}
-.footer-links a {
-  font-weight: 600;
-  font-size: 0.95rem;
 }
 .footer-meta {
   margin: 0;

@@ -2,7 +2,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0e6f83" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0b1118" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)">
 
   {% comment %} Set theme before paint to avoid a flash of the wrong theme {% endcomment %}
   <script>
@@ -10,7 +10,7 @@
       try {
         var stored = localStorage.getItem('theme');
         var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        var theme = stored || (prefersDark ? 'dark' : 'light');
+        var theme = (stored === 'light' || stored === 'dark') ? stored : (prefersDark ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', theme);
       } catch (e) {}
     })();
@@ -18,7 +18,6 @@
 
   {% seo %}
 
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
 
   <link rel="icon" type="image/png" sizes="32x32" href="{{ '/images/favicon-32.png' | relative_url }}">

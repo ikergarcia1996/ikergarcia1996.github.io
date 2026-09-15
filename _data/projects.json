@@ -1,0 +1,116 @@
+[
+  {
+    "title": "Hypernova-60B",
+    "organization": "Multiverse Computing",
+    "category": "Model compression",
+    "year": 2026,
+    "image": "/icons/multiverse.png",
+    "description": "A compressed language model for agentic workflows and tool use.",
+    "contribution": "Contributed to model development, optimized inference and distillation pipelines, and built synthetic training-data pipelines.",
+    "links": [
+      {
+        "label": "Model",
+        "url": "https://huggingface.co/MultiverseComputingCAI/Hypernova-60B-2602"
+      },
+      {
+        "label": "Related research",
+        "url": "https://arxiv.org/abs/2608.20953"
+      }
+    ]
+  },
+  {
+    "title": "FLUX.1 Krea",
+    "organization": "Krea · Black Forest Labs",
+    "category": "Image generation",
+    "year": 2025,
+    "image": "/icons/Krea.png",
+    "description": "An open image-generation model with a focus on aesthetics and photorealism.",
+    "contribution": "Contributed to model development at Krea and optimized image and video fine-tuning pipelines with distributed training, including FSDP2.",
+    "links": [
+      {
+        "label": "Technical report",
+        "url": "https://www.krea.ai/blog/flux-krea-open-source-release"
+      },
+      {
+        "label": "Model",
+        "url": "https://huggingface.co/black-forest-labs/FLUX.1-Krea-dev"
+      }
+    ]
+  },
+  {
+    "title": "GoLLIE",
+    "organization": "HiTZ",
+    "category": "Information extraction",
+    "year": 2024,
+    "image": "https://github.com/hitz-zentroa/GoLLIE/raw/main/assets/GoLLIE.png",
+    "description": "A language model that follows annotation guidelines to extract information from text.",
+    "contribution": "Co-developed GoLLIE as part of my research on language models and information extraction at HiTZ.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://openreview.net/forum?id=Y3wpuxd7u9"
+      },
+      {
+        "label": "Code",
+        "url": "https://github.com/hitz-zentroa/GoLLIE/"
+      },
+      {
+        "label": "Project",
+        "url": "https://hitz-zentroa.github.io/GoLLIE/"
+      }
+    ]
+  },
+  {
+    "title": "Latxa",
+    "organization": "HiTZ",
+    "category": "Language & scale",
+    "year": 2025,
+    "image": "/icons/latxa.svg",
+    "description": "Instruction-tuned language models for Basque, evaluated on language understanding and generation.",
+    "contribution": "Trained Latxa on the Leonardo supercomputer, using up to 512 GPUs across 128 nodes.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/2506.07597"
+      },
+      {
+        "label": "Models",
+        "url": "https://huggingface.co/collections/HiTZ/latxa-instruct-682f356091452b0028380804"
+      }
+    ]
+  },
+  {
+    "title": "Medical-mT5",
+    "organization": "HiTZ",
+    "category": "Multilingual NLP",
+    "year": 2024,
+    "image": "/icons/medical-mt5.png",
+    "description": "An open multilingual text-to-text language model for the medical domain.",
+    "contribution": "Contributed to model development and co-authored the MedicalMT5 paper as first author.",
+    "links": [
+      {
+        "label": "Paper",
+        "url": "https://aclanthology.org/2024.lrec-main.974/"
+      },
+      {
+        "label": "Model",
+        "url": "https://huggingface.co/HiTZ/Medical-mT5-xl"
+      }
+    ]
+  },
+  {
+    "title": "Veridika.ai",
+    "organization": "Personal project",
+    "category": "Agents & evidence",
+    "year": 2025,
+    "image": "/icons/veridika.png",
+    "description": "An AI agent framework for real-time fact-checking.",
+    "contribution": "Building the agent framework and its online demo.",
+    "links": [
+      {
+        "label": "Try the demo",
+        "url": "https://veridika.ai"
+      }
+    ]
+  }
+]

@@ -1,0 +1,9 @@
+<article class="project-card">
+  <div class="project-heading">
+    <img class="project-logo" src="{{ include.project.image | relative_url }}" width="64" height="64" alt="" loading="lazy">
+    <div><h3>{{ include.project.title | escape }}</h3><p class="meta">{{ include.project.organization | escape }} · {{ include.project.year }}</p></div>
+  </div>
+  <p>{{ include.project.description | escape }}</p>
+  {% unless include.compact %}<p class="contribution"><strong>My contribution</strong> {{ include.project.contribution | escape }}</p>{% endunless %}
+  <div class="resource-links">{% for link in include.project.links %}<a href="{{ link.url | escape }}">{{ link.label | escape }} <span aria-hidden="true">↗</span></a>{% endfor %}</div>
+</article>

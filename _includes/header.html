@@ -2,13 +2,13 @@
         style="--banner: url('{{ '/images/Banner_blue.png' | relative_url }}')">
   <div class="header-inner">
     <a class="brand" href="{{ '/' | relative_url }}">
-      <span class="project-name">{{ site.title }}</span>
+      {% if page.home %}<h1 class="project-name">{{ site.title }}</h1>{% else %}<span class="project-name">{{ site.title }}</span>{% endif %}
     </a>
 
     <nav class="site-nav" aria-label="Primary">
       {% for item in site.nav %}
         {% assign target = item.url | relative_url %}
-        {% if page.url == item.url or page.url == item.url | append: 'index.html' %}
+        {% if page.url == item.url %}
           {% assign is_active = true %}
         {% else %}
           {% assign is_active = false %}

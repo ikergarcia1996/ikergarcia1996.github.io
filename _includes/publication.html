@@ -1,0 +1,8 @@
+<article class="publication"{% unless include.selected %} id="{{ include.publication.id }}" data-publication{% endunless %}>
+  <p class="publication-venue">{{ include.publication.venue | escape }}{% if include.publication.language == 'eu' %} · In Basque{% endif %}</p>
+  <h3>{% if include.publication.links.size > 0 %}<a href="{{ include.publication.links.first.url | escape }}">{{ include.publication.title | escape }}</a>{% else %}{{ include.publication.title | escape }}{% endif %}</h3>
+  {% if include.selected %}<p class="publication-summary">{{ include.publication.summary | escape }}</p>{% endif %}
+  <p class="authors">{{ include.publication.authors | escape | replace: 'Iker García-Ferrero', '<strong>Iker García-Ferrero</strong>' }}</p>
+  <div class="resource-links">{% for link in include.publication.links %}<a href="{{ link.url | escape }}">{{ link.label | escape }} <span aria-hidden="true">↗</span></a>{% endfor %}</div>
+  {% unless include.selected %}{% if include.publication.summary %}<details class="research-summary"><summary>Research summary</summary><p>{{ include.publication.summary | escape }}</p></details>{% endif %}{% endunless %}
+</article>

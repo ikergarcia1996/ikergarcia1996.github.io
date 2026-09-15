@@ -1,77 +1,17 @@
 ---
-title: Software
-button_title: Software
+title: Models & Code
 layout: default
-filename: software
+description: Open models, research software, and projects I have contributed to.
 ---
 
-# Software
-
-## Featured Models
-
-<div class="grid">
-  <div class="card">
-    <img class="card-img" src="icons/multiverse.png" alt="Hypernova-60B">
-    <div class="card-content">
-      <h3 class="card-title">Hypernova-60B</h3>
-      <p class="meta">Multiverse Computing · 2026</p>
-      <p>A 60B-parameter compressed LLM optimized for agentic workflows and tool use.</p>
-      <p>📒 <a href="https://huggingface.co/MultiverseComputingCAI/Hypernova-60B-2602">Model</a></p>
-    </div>
-  </div>
-
-  <div class="card">
-    <img class="card-img" src="icons/Krea.png" alt="FLUX.1 Krea">
-    <div class="card-content">
-      <h3 class="card-title">FLUX.1 Krea (Krea 1)</h3>
-      <p class="meta">Krea · Black Forest Labs · 2025</p>
-      <p>A 22B diffusion image model with superior aesthetic control and image quality, fully compatible with FLUX.1-dev.</p>
-      <p>📖 <a href="https://www.krea.ai/blog/flux-krea-open-source-release">Blog</a> · 📒 <a href="https://huggingface.co/black-forest-labs/FLUX.1-Krea-dev">Model</a></p>
-    </div>
-  </div>
-
-  <div class="card">
-    <img class="card-img" src="https://github.com/hitz-zentroa/GoLLIE/raw/main/assets/GoLLIE.png" alt="GoLLIE">
-    <div class="card-content">
-      <h3 class="card-title">GoLLIE</h3>
-      <p class="meta">HiTZ · 2024</p>
-      <p>A 34B guideline-following LLM achieving state-of-the-art zero-shot Information Extraction.</p>
-      <p>📖 <a href="https://hitz-zentroa.github.io/GoLLIE/">Blog</a> · 📒 <a href="https://github.com/hitz-zentroa/GoLLIE/">Code</a></p>
-    </div>
-  </div>
-
-  <div class="card">
-    <img class="card-img" src="icons/latxa.svg" alt="Latxa">
-    <div class="card-content">
-      <h3 class="card-title">Latxa</h3>
-      <p class="meta">HiTZ · 2025</p>
-      <p>A Basque instruction-tuned LLM with performance comparable to GPT-4o and Claude Sonnet.</p>
-      <p>📖 <a href="https://arxiv.org/abs/2506.07597">Paper</a> · 📒 <a href="https://huggingface.co/collections/HiTZ/latxa-instruct-682f356091452b0028380804">Models</a></p>
-    </div>
-  </div>
-
-  <div class="card">
-    <img class="card-img" src="icons/medical-mt5.png" alt="Medical-mT5">
-    <div class="card-content">
-      <h3 class="card-title">Medical-mT5</h3>
-      <p class="meta">HiTZ · 2024</p>
-      <p>The first open-source multilingual text-to-text LLM for the medical domain.</p>
-      <p>📖 <a href="https://aclanthology.org/2024.lrec-main.974/">Paper</a> · 📒 <a href="https://huggingface.co/HiTZ/Medical-mT5-xl">Model</a></p>
-    </div>
-  </div>
-
-  <div class="card">
-    <img class="card-img" src="icons/veridika.png" alt="Veridika.ai">
-    <div class="card-content">
-      <h3 class="card-title">Veridika.ai</h3>
-      <p class="meta">Personal project · 2025</p>
-      <p>An AI agent framework for real-time fact-checking.</p>
-      <p>🔗 <a href="https://veridika.ai">Online Demo</a></p>
-    </div>
-  </div>
+<div class="page-intro">
+  <h1>Models &amp; code</h1>
+  <p>Open models, research software, and personal projects, with my contribution to each model.</p>
 </div>
+<div class="project-grid">{% for project in site.data.projects %}{% include project.html project=project %}{% endfor %}</div>
 
 ## Projects & Tools
+
 
 <div class="grid">
   <div class="card card-vertical">

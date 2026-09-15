@@ -1,0 +1,9 @@
+<article class="writing-item">
+  <p class="meta">{% if include.post.date %}<time datetime="{{ include.post.date }}">{{ include.post.date | date: '%b %-d, %Y' }}</time> · {% elsif include.post.year %}{{ include.post.year }} · {% endif %}{{ include.post.publisher | escape }}</p>
+  <div>
+    <h3><a href="{{ include.post.links.first.url | escape }}">{{ include.post.title | escape }}</a></h3>
+    <p>{{ include.post.summary | escape }}</p>
+    {% unless include.compact %}<p class="authors">{{ include.post.authors | escape | replace: 'Iker García-Ferrero', '<strong>Iker García-Ferrero</strong>' }}</p>{% endunless %}
+    <div class="resource-links">{% for link in include.post.links %}<a href="{{ link.url | escape }}">{% if link.label == 'Blog Post' %}Read article{% else %}{{ link.label | escape }}{% endif %} <span aria-hidden="true">↗</span></a>{% endfor %}</div>
+  </div>
+</article>

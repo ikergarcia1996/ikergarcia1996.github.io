@@ -23,20 +23,20 @@ social:
     - https://twitter.com/iker_garciaf
     - https://github.com/ikergarcia1996
     - https://www.linkedin.com/in/iker-garc%C3%ADa-ferrero-75343b172/
-    - https://scholar.google.es/citations?user=yoOzj1MAAAAJ
+    - https://scholar.google.com/citations?user=yoOzj1MAAAAJ
     - https://orcid.org/0000-0001-9612-7134
 
-# Primary navigation (order matters)
+# Direct navigation to each complete page.
 nav:
   - title: About
     url: /
   - title: Publications
     url: /publications.html
-  - title: Software
+  - title: Models & Code
     url: /software.html
   - title: Career
     url: /experience.html
-  - title: Dissemination
+  - title: Outreach
     url: /dissemination.html
   - title: Blog
     url: /blog.html
@@ -56,5 +56,7 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - scripts
+  - tmp
+  - output
   - .mypy_cache
   - vendor

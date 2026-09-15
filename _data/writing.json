@@ -1,0 +1,83 @@
+[
+  {
+    "title": "Safety for Whom? Refusing the Right Subset of a Topic, Not the Whole Topic",
+    "authors": "Antonio Tiene, Alejo López-Ávila, Iker García-Ferrero.",
+    "summary": "We study how to train LLMs to refuse harmful requests within a topic while still answering legitimate ones. Self-generated training data and harmful-benign prompt pairs help control that boundary, and evaluating both sides reveals the trade-off between safety and over-refusal.",
+    "links": [
+      {
+        "label": "Blog Post",
+        "url": "https://huggingface.co/blog/MultiverseComputingCAI/safety-for-whom"
+      },
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/2609.04482"
+      }
+    ],
+    "publisher": "Hugging Face",
+    "date": "2026-09-08"
+  },
+  {
+    "title": "Quantization-Aware Healing: a compressed, 4-bit model that outperforms its full-precision original",
+    "authors": "Antonio Tiene, Iker García-Ferrero, Ali Hashemi, Bakbergen Ryskulov.",
+    "summary": "Recovering compressed, 4-bit LLMs by distilling directly from the original model. We examine accuracy, training stability, and the cost of recovery.",
+    "links": [
+      {
+        "label": "Blog Post",
+        "url": "https://huggingface.co/blog/MultiverseComputingCAI/quantization-aware-healing"
+      }
+    ],
+    "publisher": "Hugging Face",
+    "date": "2026-08-25"
+  },
+  {
+    "title": "Making Knowledge Distillation Cheap Enough to Run at Scale",
+    "authors": "Antonio Tiene, Iker García-Ferrero, Ali Hashemi, Bakbergen Ryskulov.",
+    "summary": "How offline teacher logits and a fused KL loss make distillation more efficient in memory and compute, with benchmarks and an open-source implementation.",
+    "links": [
+      {
+        "label": "Blog Post",
+        "url": "https://huggingface.co/blog/MultiverseComputingCAI/efficient-knowledge-distillation"
+      }
+    ],
+    "publisher": "Hugging Face",
+    "date": "2026-08-10"
+  },
+  {
+    "title": "Releasing Open Weights for FLUX.1 Krea",
+    "authors": "Sangwu Lee, Titus Ebbecke, Erwann Millon, Will Beddow, Le Zhuo, Iker García-Ferrero, Liam Esparraguera, Mihai Petrescu, Gian Saß, Gabriel Menezes, Victor Perez",
+    "summary": "The training process behind FLUX.1 Krea, an open image-generation model developed with Black Forest Labs, with a focus on aesthetics and photorealism.",
+    "links": [
+      {
+        "label": "Blog Post",
+        "url": "https://www.krea.ai/blog/flux-krea-open-source-release"
+      }
+    ],
+    "publisher": "Krea",
+    "date": "2025-07-31"
+  },
+  {
+    "title": "GoLLIE: Guideline-following Large Language Model for Information Extraction",
+    "authors": "Oscar Sainz, Iker García-Ferrero, Rodrigo Agerri, Oier Lopez de Lacalle, German Rigau and Eneko Agirre",
+    "summary": "We present GoLLIE, a Large Language Model trained to follow annotation guidelines. It outperforms previous approaches on zero-shot IE and supports schemas defined on the fly.",
+    "links": [
+      {
+        "label": "Blog Post",
+        "url": "https://hitz-zentroa.github.io/GoLLIE/"
+      }
+    ],
+    "publisher": "HiTZ"
+  },
+  {
+    "title": "Did ChatGPT cheat on your test? (2023)",
+    "authors": "Oscar Sainz, Jon Ander Campos, Iker García-Ferrero, Julen Etxaniz, Eneko Agirre",
+    "summary": "We show popular benchmark datasets are already memorized by ChatGPT and that one can prompt ChatGPT to regenerate them.",
+    "links": [
+      {
+        "label": "Blog Post",
+        "url": "https://hitz-zentroa.github.io/lm-contamination/blog/"
+      }
+    ],
+    "publisher": "HiTZ",
+    "year": "2023"
+  }
+]
