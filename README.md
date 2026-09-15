@@ -20,6 +20,8 @@ The site uses the original blue banner and page tabs. Every tab opens a complete
 
 Publication search is optional JavaScript; the full archive, year links, and research summaries remain available without it. Dates are displayed only where known, with a year used when an exact date is unavailable.
 
+CSS and JavaScript URLs include the Jekyll build timestamp. Each deployment gets a new asset URL so a cached stylesheet or script from an earlier design cannot be reused with the new HTML.
+
 ## Run locally
 
 With Docker:
