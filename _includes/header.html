@@ -10,6 +10,8 @@
         {% assign target = item.url | relative_url %}
         {% if page.url == item.url %}
           {% assign is_active = true %}
+        {% elsif page.layout == 'post' and item.url == '/blog.html' %}
+          {% assign is_active = true %}
         {% else %}
           {% assign is_active = false %}
         {% endif %}

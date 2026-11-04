@@ -1,0 +1,25 @@
+---
+layout: default
+---
+<article class="post">
+  <header class="post-header">
+    <p class="post-eyebrow"><a href="{{ '/blog.html' | relative_url }}">Blog</a>{% if page.kicker %} · {{ page.kicker }}{% endif %}</p>
+    <h1 class="post-title">{{ page.title }}</h1>
+    {% if page.dek %}<p class="post-dek">{{ page.dek }}</p>{% endif %}
+    <div class="post-byline">
+      <img class="post-avatar" src="{{ '/images/avatar.jpg' | relative_url }}" alt="" width="40" height="40">
+      <div>
+        <span class="post-author">{{ page.author_name | default: site.author.name }}</span>
+        <span class="post-date"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%B %-d, %Y' }}</time>{% if page.reading_time %} · {{ page.reading_time }} read{% endif %}</span>
+      </div>
+    </div>
+    {% if page.resources %}
+    <div class="post-resources">{% for link in page.resources %}<a href="{{ link.url }}">{{ link.label }} <span aria-hidden="true">↗</span></a>{% endfor %}</div>
+    {% endif %}
+  </header>
+  <div class="post-body">
+    {{ content }}
+  </div>
+</article>
+{% for script in page.scripts %}<script src="{% if script contains '://' %}{{ script }}{% else %}{{ script | relative_url }}?v={{ site.time | date: '%s' }}{% endif %}" defer></script>
+{% endfor %}

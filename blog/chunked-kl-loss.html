@@ -1,0 +1,470 @@
+---
+layout: post
+title: "Optimizing KL loss: how to fit long context distillation into your VRAM"
+description: "How a fused, chunked KL kernel computes the exact distillation loss and its gradients without ever storing the vocabulary-sized logit tensor, using 11.6× less memory and running 3.3× faster at 256K tokens."
+dek: "At long context, the largest tensor in knowledge distillation is not in the model. It is the student's vocabulary-sized logits. This post explains a kernel that computes the exact same loss and gradients without ever storing them."
+kicker: Kernels
+date: 2026-11-04
+reading_time: 12 min
+permalink: /blog/chunked-kl-loss/
+page_class: post-page
+resources:
+  - label: Paper
+    url: https://arxiv.org/abs/2608.03796
+  - label: Code
+    url: https://github.com/CompactifAI/Full-Chunked-KL-Loss
+styles:
+  - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css
+  - /assets/css/post.css
+scripts:
+  - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js
+  - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js
+  - /assets/js/chunked-kl.js
+---
+
+<p class="lede">To distill a large language model into a smaller one, you compare the teacher's and the student's next-token distributions at every position of every sequence. Each distribution spans the whole vocabulary, which is 128K to 200K entries in current models. At long context, the tensors holding them become the largest objects on the GPU, and the first thing that runs out of memory.</p>
+
+<p>We hit this wall when we tried to distill at 32K tokens and beyond. The fix turned out to be a loss kernel that computes the forward KL divergence <em>and</em> its gradients in sequence chunks, fused with the model's output projection, so that the full logit tensor never exists. This post walks through how the kernel works and what it buys.</p>
+
+<div class="stat-row wide" aria-label="Headline results">
+  <div class="stat"><span class="stat-value">11.6×</span><span class="stat-label">less peak memory than a forward-chunked loss at 256K tokens</span></div>
+  <div class="stat"><span class="stat-value">3.3×</span><span class="stat-label">faster per iteration at 256K tokens, while computing the same loss</span></div>
+  <div class="stat"><span class="stat-value">4 → 1</span><span class="stat-label">nodes needed to distill GPT-OSS-20B at a 32K context</span></div>
+</div>
+
+<p>This is one part of our paper, <a href="https://arxiv.org/abs/2608.03796">Efficient Knowledge Distillation for LLMs: Offline Top-K Logits and a Fused Chunked KL Loss</a>, written with Bakbergen Ryskulov, David Montero, David Jansen, Ali Hashemi, Jezabel R. Garcia, Antonio Tiene and Román Orús. The paper also covers offline teacher caching and the resulting compact model. Here I focus only on the kernel. The implementation is <a href="https://github.com/CompactifAI/Full-Chunked-KL-Loss">open source</a>.</p>
+
+<h2 id="logit-wall">The logit wall</h2>
+
+<p>A language model ends with a linear head. It takes the final hidden states \(h \in \mathbb{R}^{S \times d}\) for a sequence of \(S\) tokens and projects them through the output weights \(W \in \mathbb{R}^{V \times d}\) to get one logit per vocabulary entry:</p>
+
+$$z = h\,W^{\top} \in \mathbb{R}^{S \times V}$$
+
+<p>The hidden size \(d\) is a few thousand. The vocabulary \(V\) is two orders of magnitude larger. For GPT-OSS, \(d = 2{,}880\) and \(V = 201{,}088\), so the logits are about 70 times larger than the hidden states that produced them. And they grow linearly with the sequence length.</p>
+
+<figure class="figure wide" id="fig-wall">
+  <div class="figure-frame">
+    <div class="figure-head">
+      <div>
+        <span class="figure-title">How big are the logits of GPT-OSS?</span>
+        <span class="figure-sub">One sequence, vocabulary 201,088, fp32. Hover over a column to inspect it.</span>
+      </div>
+      <ul class="legend">
+        <li><i style="color: var(--s-dense)"></i>Full logits, S × V</li>
+        <li><i style="color: var(--s-fused)"></i>One 4,096-token chunk, C × V</li>
+      </ul>
+    </div>
+    <div class="calc-readout">
+      <div><span class="calc-num" data-wall-full>0 GB</span><span class="calc-cap"><i style="background: var(--s-dense)"></i><span>Full logits at <span class="tabular" data-wall-seq>4,096</span> tokens</span></span></div>
+      <div><span class="calc-num">3.3 GB</span><span class="calc-cap"><i style="background: var(--s-fused)"></i>One chunk, at any context length</span></div>
+    </div>
+    <div data-wall-chart></div>
+    <div class="kernel-controls">
+      <button type="button" class="play" data-wall-play aria-label="Pause">
+        <svg viewBox="0 0 14 14" aria-hidden="true"><path data-icon d="M3 1.5h3v11H3zM8 1.5h3v11H8z" fill="currentColor"/></svg>
+      </button>
+      <span class="ctl-note">The context length doubles from 4K to 256K tokens, and so do the logits.</span>
+    </div>
+    <details class="data-table">
+      <summary>Show data</summary>
+      <table>
+        <thead><tr><th>Context length</th><th>Full logits</th><th>One chunk</th></tr></thead>
+        <tbody>
+          <tr><td>4,096</td><td>3.3 GB</td><td>3.3 GB</td></tr>
+          <tr><td>8,192</td><td>6.6 GB</td><td>3.3 GB</td></tr>
+          <tr><td>16,384</td><td>13.2 GB</td><td>3.3 GB</td></tr>
+          <tr><td>32,768</td><td>26.4 GB</td><td>3.3 GB</td></tr>
+          <tr><td>65,536</td><td>52.7 GB</td><td>3.3 GB</td></tr>
+          <tr><td>131,072</td><td>105.4 GB</td><td>3.3 GB</td></tr>
+          <tr><td>262,144</td><td>210.9 GB</td><td>3.3 GB</td></tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
+  <figcaption>Logit memory is \(S \times V \times 4\) bytes. At 256K tokens a single copy is larger than the whole H200, and a standard loss keeps several. A chunk of \(C\) tokens costs the same at every context length.</figcaption>
+</figure>
+
+<p>That is a single copy. A straightforward distillation loss holds several: the student logits, their log-softmax, the teacher distribution expanded to the same shape, and, during the backward pass, the gradient with respect to the logits. Each of them is \(S \times V\).</p>
+
+<p>For ordinary cross-entropy against hard labels, the standard fix is to fuse the output projection into the loss and chunk it, as <a href="https://github.com/apple/ml-cross-entropy">Cut Cross-Entropy</a> and <a href="https://github.com/linkedin/Liger-Kernel">Liger Kernel</a> do. Our objective is different: a KL divergence against a sparse, cached top-K teacher. It was not available in the distillation tooling we use, such as ModelOpt, so we wrote our own.</p>
+
+<h2 id="what-the-loss-needs">What the loss actually needs</h2>
+
+<p>We distill against a cached teacher. For each position we store only the teacher's top \(K = 100\) tokens and their probabilities \(p_v\), for \(v\) in the support set \(\mathcal{S}\). They are not renormalized, so the retained mass \(M = \sum_{v \in \mathcal{S}} p_v\) is slightly below one. Writing the student's log-probabilities as \(\log q_v = z_v - \log Z\), the forward KL for one token splits into three pieces:</p>
+
+$$\mathcal{L}_{\mathrm{KL}} \;=\; \underbrace{\sum_{v \in \mathcal{S}} p_v \log p_v}_{H} \;-\; \underbrace{\sum_{v \in \mathcal{S}} p_v\, z_v}_{C} \;+\; M \log Z, \qquad \log Z = \log \sum_{v=1}^{V} e^{z_v}$$
+
+<p>Look at what each term touches. The teacher entropy \(H\), the cross term \(C\) and the mass \(M\) need only the \(K\) cached entries. Only the log-normalizer \(\log Z\) spans the whole vocabulary, and it reduces each row of logits to <strong>a single number</strong>.</p>
+
+<figure class="figure wide" id="fig-row">
+  <div class="figure-frame">
+    <div class="figure-head">
+      <div>
+        <span class="figure-title">Anatomy of one row of logits</span>
+        <span class="figure-sub">One token position, \(V\) vocabulary entries. Hover over a teacher entry.</span>
+      </div>
+      <ul class="legend">
+        <li><i style="color: var(--s-neutral-2)"></i>Student logit \(z_v\)</li>
+        <li><i style="color: var(--s-teacher)"></i>Teacher top-K entry \(p_v\)</li>
+      </ul>
+    </div>
+    <div data-row-chart></div>
+  </div>
+  <figcaption>The sparse terms read 100 entries out of hundreds of thousands. The full row is needed only to compute \(\log Z\), a single scalar per token.</figcaption>
+</figure>
+
+<p>The gradient is just as compact. Differentiating with respect to a logit gives</p>
+
+$$\frac{\partial \mathcal{L}}{\partial z_v} \;=\; M\,\mathrm{softmax}(z)_v \;-\; p_v,$$
+
+<p>with \(p_v = 0\) outside the teacher's support. To rebuild it you need the logits of that row, \(\log Z\) and \(M\). Nothing else. So the rows can be produced, used and thrown away, as long as you are willing to produce them again in the backward pass.</p>
+
+<blockquote><p>The full \(S \times V\) tensor is never needed at once. Each row is needed briefly, and only to compute one scalar and one gradient.</p></blockquote>
+
+<h2 id="kernel">The kernel</h2>
+
+<p>The fused kernel takes the hidden states and the output weights, not the logits. It splits the sequence into chunks of \(C\) tokens (4,096 by default) and visits them three times. Each visit recomputes that chunk's \(C \times V\) logit tile with one matrix multiply, uses it and frees it before moving on.</p>
+
+<figure class="figure wide" id="fig-kernel">
+  <div class="figure-frame">
+    <div class="figure-head">
+      <div>
+        <span class="figure-title">One training step through the output head</span>
+        <span class="figure-sub">Standard and fused paths on the same clock. Six chunks for readability; real runs use 4,096-token chunks.</span>
+      </div>
+      <div class="phase-chips" data-kernel-chips>
+        <button type="button">Forward</button><button type="button">Loss</button><button type="button">Backward</button>
+      </div>
+    </div>
+    <div class="kernel-pair" role="img" aria-label="Animated diagrams of the standard dense and the fused chunked output head, side by side, showing hidden states, output weights and logits during the forward and backward passes">
+      <div class="kernel-panel" data-kernel-panel="dense">
+        <p class="kernel-label"><i style="background: var(--s-dense)"></i>Standard dense</p>
+        <div data-kernel-svg></div>
+        <div class="mem-meter">
+          <div class="mm-head"><span>Vocabulary-sized memory</span><b data-mm-val></b></div>
+          <div class="mm-track"><div class="mm-fill" data-mm-fill style="background-color: var(--s-dense)"></div></div>
+        </div>
+        <div class="kernel-step" aria-live="polite"><span class="ks-t" data-ks-t></span><span class="ks-d" data-ks-d></span></div>
+      </div>
+      <div class="kernel-panel" data-kernel-panel="fused">
+        <p class="kernel-label"><i style="background: var(--s-fused)"></i>Fused chunked</p>
+        <div data-kernel-svg></div>
+        <div class="mem-meter">
+          <div class="mm-head"><span>Vocabulary-sized memory</span><b data-mm-val></b></div>
+          <div class="mm-track"><div class="mm-fill" data-mm-fill style="background-color: var(--s-fused)"></div></div>
+        </div>
+        <div class="kernel-step" aria-live="polite"><span class="ks-t" data-ks-t></span><span class="ks-d" data-ks-d></span></div>
+      </div>
+    </div>
+    <div class="kernel-controls">
+      <button type="button" class="play" data-kernel-play aria-label="Pause">
+        <svg viewBox="0 0 14 14" aria-hidden="true"><path data-icon d="M3 1.5h3v11H3zM8 1.5h3v11H8z" fill="currentColor"/></svg>
+      </button>
+      <input class="scrub" type="range" min="0" max="1000" value="0" aria-label="Animation position" data-kernel-scrub>
+      <span class="ks-n" data-ks-n>Chunk 1 of 6</span>
+    </div>
+  </div>
+  <figcaption>In the <b>standard</b> path, the logits, their log-softmax, a dense teacher and the logit gradient each take the full \(S \times V\) shape. In the <b>fused</b> kernel, only one \(C \times V\) tile is alive at a time, whatever the sequence length. Both memory meters share one scale, counted in tiles; it is illustrative.</figcaption>
+</figure>
+
+<p>The rest of this section walks through the kernel in code. The snippets are a simplified version of <a href="https://github.com/CompactifAI/Full-Chunked-KL-Loss/blob/main/full_chunked.py"><code>full_chunked.py</code></a>: one GPU, a batch of one, and no temperature or logit scale. The comments mark where the real kernel adds tensor-parallel reductions. The whole thing is a single <code>torch.autograd.Function</code> in plain PyTorch, with no custom CUDA.</p>
+
+<h3>Pass 1: the normalizer</h3>
+<p>For each chunk, compute the tile \(z = h_{[s_0:s_1]} W^{\top}\), take the row maxima and the sum of shifted exponentials, and store \(\log Z\): one float per token. Then discard the tile. This is the usual max-shifted log-sum-exp, done one chunk at a time. When the vocabulary is sharded across tensor-parallel ranks, the max and the sum are all-reduced, and each rank only ever sees its own slice of \(V\).</p>
+
+<h3>Pass 2: the loss</h3>
+<p>Recompute the tile, gather the logits at the teacher's top-K token ids, and accumulate \(H\), \(C\) and \(M\). Combined with the stored \(\log Z\), they give the per-token loss. Here is the whole forward pass:</p>
+
+<pre class="wide"><code><span class="k">class</span> FusedChunkedKL(torch.autograd.Function):
+
+    <span class="k">@staticmethod</span>
+    <span class="k">def</span> forward(ctx, hidden, W, t_idx, v_idx, p, C):
+        <span class="c"># hidden: [S, d] final hidden states    W: [V, d] output head</span>
+        <span class="c"># (t_idx, v_idx, p): the sparse top-K teacher, one entry per</span>
+        <span class="c"># (position, token id, probability), sorted by position</span>
+        S = hidden.shape[<span class="f">0</span>]
+        log_z = hidden.new_empty(S, dtype=torch.float32)
+        loss = torch.empty_like(log_z)
+        mass = torch.empty_like(log_z)
+
+        <span class="c"># We write the backward pass ourselves, so autograd records nothing.</span>
+        <span class="k">with</span> torch.no_grad():
+
+            <span class="c"># ---- Pass 1: the log-normalizer, one C x V tile at a time ----</span>
+            <span class="k">for</span> s0 <span class="k">in</span> range(<span class="f">0</span>, S, C):
+                s1 = min(s0 + C, S)
+                z = (hidden[s0:s1] @ W.T).float()   <span class="c"># [C, V]: the only vocab-sized tensor</span>
+                m = z.amax(dim=-<span class="f">1</span>)                  <span class="c"># row max, for a stable log-sum-exp</span>
+                <span class="c"># (tensor parallel: all_reduce(m, MAX), each rank sees V / tp columns)</span>
+                z.sub_(m[:, <span class="k">None</span>]).exp_()           <span class="c"># shifted exponentials, in place</span>
+                total = z.sum(dim=-<span class="f">1</span>)
+                <span class="c"># (tensor parallel: all_reduce(total, SUM))</span>
+                log_z[s0:s1] = m + total.log()      <span class="c"># one float per token</span>
+                <span class="k">del</span> z                               <span class="c"># the tile is gone before the next chunk</span>
+
+            <span class="c"># ---- Pass 2: the sparse terms of the loss ----</span>
+            <span class="k">for</span> s0 <span class="k">in</span> range(<span class="f">0</span>, S, C):
+                s1 = min(s0 + C, S)
+                z = (hidden[s0:s1] @ W.T).float()   <span class="c"># recompute the very same tile</span>
+                <span class="c"># The teacher entries are sorted by position, so this chunk&#x27;s</span>
+                <span class="c"># entries are one contiguous slice.</span>
+                lo = torch.searchsorted(t_idx, s0)
+                hi = torch.searchsorted(t_idx, s1)
+                t, v, pk = t_idx[lo:hi] - s0, v_idx[lo:hi], p[lo:hi]
+                z_k = z[t, v]                       <span class="c"># gather K logits per row</span>
+                rows = torch.zeros(s1 - s0, device=z.device)
+                H = rows.scatter_add(<span class="f">0</span>, t, pk * pk.log())   <span class="c"># teacher entropy</span>
+                X = rows.scatter_add(<span class="f">0</span>, t, pk * z_k)        <span class="c"># cross term</span>
+                M = rows.scatter_add(<span class="f">0</span>, t, pk)              <span class="c"># retained mass</span>
+                loss[s0:s1] = H - X + M * log_z[s0:s1]
+                mass[s0:s1] = M
+                <span class="k">del</span> z
+
+        <span class="c"># Saved for backward: inputs plus two floats per token. No logits.</span>
+        ctx.save_for_backward(hidden, W, log_z, mass, t_idx, v_idx, p)
+        ctx.C = C
+        <span class="k">return</span> loss                                 <span class="c"># per-token KL, [S]</span>
+</code></pre>
+
+<p>A few details matter more than they look:</p>
+<ul>
+  <li><strong>Everything runs under <code>torch.no_grad()</code>.</strong> Autograd would otherwise keep every tile alive for its own backward pass, which is exactly the memory we are trying to avoid. Because we provide the backward ourselves, nothing needs to be recorded.</li>
+  <li><strong>The tile is cast to fp32 before the reductions.</strong> The matmul runs in bf16 on the tensor cores, but exponentials and sums over 200K entries need the extra precision. The fp32 tile is the largest temporary, at \(C \times V \times 4\) bytes.</li>
+  <li><strong>The sparse terms use <code>scatter_add</code>.</strong> Each teacher entry adds its contribution to the row it belongs to, so a position can have any number of entries and positions without a teacher simply contribute zero.</li>
+  <li><strong>What is saved for backward is tiny:</strong> the inputs, which autograd keeps anyway, plus \(\log Z\) and \(M\), two floats per token.</li>
+</ul>
+
+<h3>Backward: recompute, do not store</h3>
+<p>Recompute the tile once more and turn it into the gradient in place. Exponentiate \(z - \log Z\) to get the softmax, scale it by \(M\) and the upstream gradient, and subtract \(p\) at the K support positions. Two more matrix multiplies give this chunk's \(\partial h\) and add its contribution to \(\partial W\). Then the tile is freed.</p>
+
+<pre class="wide"><code>    <span class="k">@staticmethod</span>
+    <span class="k">def</span> backward(ctx, grad_loss):
+        <span class="c"># grad_loss: [S], the upstream gradient of each token&#x27;s loss</span>
+        hidden, W, log_z, mass, t_idx, v_idx, p = ctx.saved_tensors
+        S, C = hidden.shape[<span class="f">0</span>], ctx.C
+        grad_hidden = torch.empty_like(hidden)
+        grad_W = torch.zeros_like(W, dtype=torch.float32)   <span class="c"># accumulated in fp32</span>
+
+        <span class="k">for</span> s0 <span class="k">in</span> range(<span class="f">0</span>, S, C):
+            s1 = min(s0 + C, S)
+            h = hidden[s0:s1]
+            z = (h @ W.T).float()                   <span class="c"># third and last projection</span>
+
+            <span class="c"># dL/dz = M * softmax(z) - p, built in place on top of the logits.</span>
+            g = z.sub_(log_z[s0:s1, <span class="k">None</span>]).exp_()   <span class="c"># softmax(z): log Z is already known</span>
+            g.mul_((mass[s0:s1] * grad_loss[s0:s1])[:, <span class="k">None</span>])
+            lo = torch.searchsorted(t_idx, s0)
+            hi = torch.searchsorted(t_idx, s1)
+            t, v = t_idx[lo:hi] - s0, v_idx[lo:hi]
+            g.index_put_((t, v), -p[lo:hi] * grad_loss[t + s0],
+                         accumulate=<span class="k">True</span>)           <span class="c"># subtract p at the K support entries</span>
+
+            g = g.to(W.dtype)                       <span class="c"># back to bf16 for the tensor cores</span>
+            grad_hidden[s0:s1] = g @ W              <span class="c"># [C, V] x [V, d] -&gt; [C, d]</span>
+            grad_W += (g.T @ h).float()             <span class="c"># [V, C] x [C, d] -&gt; [V, d]</span>
+            <span class="k">del</span> z, g                                <span class="c"># free the tile</span>
+
+        <span class="c"># (tensor parallel: all_reduce(grad_hidden), since each rank only</span>
+        <span class="c">#  contributed its own slice of the vocabulary)</span>
+        <span class="k">return</span> grad_hidden, grad_W.to(W.dtype), <span class="k">None</span>, <span class="k">None</span>, <span class="k">None</span>, <span class="k">None</span>
+</code></pre>
+
+<p>Because \(\log Z\) was stored in the forward pass, the softmax needs no reduction at all here: subtracting it and exponentiating gives normalized probabilities directly. Every step writes into the same buffer, so the fp32 tile, its softmax and the gradient are one allocation. The sparse correction is a scatter of \(K\) values per row with <code>accumulate=True</code>, the only place the teacher enters the backward pass.</p>
+
+<p>The trade is plain gradient checkpointing applied to the output head. The projection is computed three times instead of once: twice in the forward pass, once more in the backward pass. In exchange, vocabulary-sized memory is bounded by \(C \times V\), and the only thing that still grows with sequence length is the hidden state, \(S \times d\), with \(d \ll V\). Loss values and hidden-state gradients match the dense reference within \(10^{-4}\).</p>
+
+<h2 id="results-32k">At 32K tokens: a real training run</h2>
+
+<p>The first test is the one that motivated the work: distilling Llama 3.1 8B Instruct into a 3.2B student on a single H200 with a 32,768-token context. The figure follows GPU memory through one training iteration, component by component.</p>
+
+<figure class="figure wide" id="fig-32k">
+  <div class="figure-frame">
+    <div class="figure-head">
+      <div>
+        <span class="figure-title">GPU memory through one training iteration at 32K context</span>
+        <span class="figure-sub">Llama 3.1 8B Instruct → 3.2B student, single H200. Hover over a chart to inspect any moment.</span>
+      </div>
+    </div>
+    <ul class="legend" style="margin-bottom: 1rem">
+      <li><i class="split"></i>Loss and logits</li>
+      <li><i style="color: var(--m-acts)"></i>Activations</li>
+      <li><i style="color: var(--s-grad)"></i>Gradients</li>
+      <li><i style="color: var(--m-optim)"></i>Optimizer states</li>
+      <li><i style="color: var(--m-weights)"></i>Model weights</li>
+    </ul>
+    <div class="chart-pair">
+      <div><p class="chart-label mem-label"><span>Dense KL</span><b data-mem-now="dense"></b></p><div data-mem-chart="dense"></div></div>
+      <div><p class="chart-label mem-label"><span>Fused chunked KL</span><b data-mem-now="fused"></b></p><div data-mem-chart="fused"></div></div>
+    </div>
+    <div class="kernel-controls">
+      <button type="button" class="play" data-mem-play aria-label="Pause">
+        <svg viewBox="0 0 14 14" aria-hidden="true"><path data-icon d="M3 1.5h3v11H3zM8 1.5h3v11H8z" fill="currentColor"/></svg>
+      </button>
+      <span class="ctl-note" data-mem-phase aria-live="polite"></span>
+    </div>
+    <details class="data-table">
+      <summary>Show data</summary>
+      <table>
+        <thead><tr><th>At the peak, approximate</th><th>Dense KL</th><th>Fused chunked KL</th></tr></thead>
+        <tbody>
+          <tr><td>Model weights</td><td>18 GB</td><td>18 GB</td></tr>
+          <tr><td>Optimizer states</td><td>30 GB</td><td>30 GB</td></tr>
+          <tr><td>Activations</td><td>77 GB</td><td>77 GB</td></tr>
+          <tr><td>Loss and logits</td><td>125 GB</td><td>3 GB</td></tr>
+          <tr><td><b>Total</b></td><td><b>≈250 GB</b></td><td><b>≈128 GB</b></td></tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
+  <figcaption>Everything except the loss is identical in the two runs. The vocabulary-sized tensors arrive exactly when activations peak, at the turn between the forward and backward passes, which is why they decide whether the run fits.</figcaption>
+</figure>
+
+<p>With the dense loss, the logit and teacher tensors push the peak to roughly 250 GB, far beyond the H200's 141 GB. The fused loss never forms them and peaks at about 128 GB, so the run fits on one GPU.</p>
+
+<p>The same effect shows up at a larger scale. Distilling GPT-OSS-20B at 32,768 tokens previously needed four 8×H200 nodes. With the fused loss it fits on one, with less model parallelism and no inter-node communication:</p>
+
+<figure class="figure" id="fig-gptoss">
+  <div class="figure-frame compare">
+    <div class="figure-head">
+      <div>
+        <span class="figure-title">GPT-OSS-20B distillation at 32K context</span>
+        <span class="figure-sub">8×H200 nodes. Before: TP 4, PP 4, EP 2. After: TP 2, PP 1, EP 4.</span>
+      </div>
+    </div>
+    <div class="compare-rows">
+      <div class="compare-row"><span class="cr-k">Nodes</span><span class="cr-a">4</span><span class="cr-arrow" aria-hidden="true">→</span><span class="cr-b">1</span><span class="cr-x">4× fewer</span></div>
+      <div class="compare-row"><span class="cr-k">Step time</span><span class="cr-a">57.0 s</span><span class="cr-arrow" aria-hidden="true">→</span><span class="cr-b">12.23 s</span><span class="cr-x">4.7× faster</span></div>
+      <div class="compare-row"><span class="cr-k">Throughput per GPU</span><span class="cr-a">74.2 TFLOP/s</span><span class="cr-arrow" aria-hidden="true">→</span><span class="cr-b">345.7 TFLOP/s</span><span class="cr-x">4.7× higher</span></div>
+    </div>
+  </div>
+</figure>
+
+<h2 id="results-256k">Isolating the kernel: 32K and 256K</h2>
+
+<p>End-to-end runs mix the loss with everything else on the GPU. To isolate it, we benchmark the output projection and the loss alone, with no transformer body: hidden size 4,096, a 131,072-token vocabulary, top-K = 100, batch size 1 and 4,096-token chunks, split across two H200s with tensor parallelism. Besides the dense baseline, we compare against a <strong>forward-chunked</strong> loss. It keeps the teacher sparse and computes the loss in chunks, but takes the logits from the regular output layer, so autograd still stores all of them for the backward pass.</p>
+
+<figure class="figure wide" id="fig-bench">
+  <div class="figure-frame">
+    <div class="figure-head">
+      <div>
+        <span class="figure-title">Loss-only benchmark</span>
+        <span class="figure-sub">Per GPU, 2 × H200, vocabulary 131,072, chunk size 4,096</span>
+      </div>
+      <div class="seg" role="group" aria-label="Context length" data-bench-seq>
+        <button type="button" data-seq="32K" aria-pressed="false">32K tokens</button>
+        <button type="button" data-seq="256K" aria-pressed="true">256K tokens</button>
+      </div>
+    </div>
+    <ul class="legend" style="margin-bottom: 1rem">
+      <li><i style="color: var(--s-dense)"></i>Dense KL</li>
+      <li><i style="color: var(--s-fwd)"></i>Forward-chunked KL</li>
+      <li><i style="color: var(--s-fused)"></i>Fused chunked KL</li>
+    </ul>
+    <div class="chart-pair">
+      <div><p class="chart-label">Peak memory <span>· GiB, lower is better</span></p><div data-bench-mem></div></div>
+      <div><p class="chart-label">Time per iteration <span>· lower is better</span></p><div data-bench-time></div></div>
+    </div>
+    <p class="callout" data-bench-callout></p>
+    <details class="data-table">
+      <summary>Show data</summary>
+      <table>
+        <thead><tr><th>Loss</th><th>32K memory</th><th>32K time</th><th>256K memory</th><th>256K time</th></tr></thead>
+        <tbody>
+          <tr><td>Dense KL</td><td>85.2 GiB</td><td>218 ms</td><td>Out of memory</td><td>–</td></tr>
+          <tr><td>Forward-chunked KL</td><td>17.7 GiB</td><td>183 ms</td><td>134.2 GiB</td><td>5.26 s</td></tr>
+          <tr><td>Fused chunked KL</td><td>5.45 GiB</td><td>199 ms</td><td>11.6 GiB</td><td>1.59 s</td></tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
+  <figcaption>Dense KL already runs out of memory at 64K tokens. The dashed line marks the 139.7 GiB of memory available on each H200.</figcaption>
+</figure>
+
+<p>At <strong>32K tokens</strong>, the fused loss uses 5.45 GiB, against 85.2 GiB for the dense loss: <strong>15.6× less</strong>. The forward-chunked loss is the fastest here, by about 8%, since it computes the projection only once and its logits still fit comfortably.</p>
+
+<p>At <strong>256K tokens</strong>, that changes. The forward-chunked loss needs 134.2 GiB per GPU, nearly the whole H200, just to keep its logits for the backward pass. The fused loss peaks at <strong>11.6 GiB</strong> and is <strong>3.3× faster</strong>, even though it computes the projection three times. Its throughput stays near 266 TFLOP/s at both lengths, while the forward-chunked loss falls from 288 TFLOP/s at 32K to 80 TFLOP/s at 256K. Past a certain size, storing and reading the logits costs more than computing them again.</p>
+
+<h3>Choosing the chunk size</h3>
+
+<p>The chunk size is the one knob. Larger chunks feed bigger matrix multiplies to the GPU but keep a larger tile alive. The floor under the memory curve is everything else: hidden states, weights and their gradients.</p>
+
+<figure class="figure wide" id="fig-chunk">
+  <div class="figure-frame">
+    <div class="figure-head">
+      <div>
+        <span class="figure-title">Fused chunked KL across chunk sizes</span>
+        <span class="figure-sub">Same loss-only benchmark, per GPU</span>
+      </div>
+      <div class="seg" role="group" aria-label="Context length" data-chunk-seq>
+        <button type="button" data-seq="32K" aria-pressed="false">32K tokens</button>
+        <button type="button" data-seq="256K" aria-pressed="true">256K tokens</button>
+      </div>
+    </div>
+    <div class="chart-pair">
+      <div><p class="chart-label">Peak memory <span>· GiB</span></p><div data-chunk-mem></div></div>
+      <div><p class="chart-label">Time per iteration</p><div data-chunk-time></div></div>
+    </div>
+    <details class="data-table">
+      <summary>Show data</summary>
+      <table>
+        <thead><tr><th>Chunk size</th><th>32K memory</th><th>32K time</th><th>256K memory</th><th>256K time</th></tr></thead>
+        <tbody>
+          <tr><td>512</td><td>4.13 GiB</td><td>430 ms</td><td>10.3 GiB</td><td>3.47 s</td></tr>
+          <tr><td>1,024</td><td>4.32 GiB</td><td>298 ms</td><td>10.5 GiB</td><td>2.38 s</td></tr>
+          <tr><td>2,048</td><td>4.70 GiB</td><td>231 ms</td><td>10.8 GiB</td><td>1.84 s</td></tr>
+          <tr><td>4,096</td><td>5.45 GiB</td><td>199 ms</td><td>11.6 GiB</td><td>1.59 s</td></tr>
+          <tr><td>8,196</td><td>8.46 GiB</td><td>182 ms</td><td>14.6 GiB</td><td>1.45 s</td></tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
+  <figcaption>Going from 4,096 to 512 tokens per chunk saves 1.3 GiB at 256K but more than doubles the iteration time. We use <b>4,096</b> everywhere else in this post.</figcaption>
+</figure>
+
+<h2 id="limits">When to use it</h2>
+
+<ul>
+  <li><strong>Long context is where it pays off.</strong> Up to about 32K tokens, a forward-chunked loss can be slightly faster if its logits fit in memory. Beyond that, the fused loss wins on both memory and speed.</li>
+  <li><strong>The 256K numbers isolate the loss.</strong> They come from a benchmark without attention, optimizer state or data loading, and are not end-to-end training throughput.</li>
+  <li><strong>We have tested it on H200 GPUs</strong> with Megatron-Bridge and ModelOpt. Other hardware and frameworks are untested.</li>
+</ul>
+
+<h2 id="use-it">Use it</h2>
+
+<p>Using the kernel requires one change to the model: the output head must not run during training. The loss needs the final hidden states and the head's weight, and does the projection itself. A sketch of the change to a model's forward pass:</p>
+
+<pre class="wide"><code><span class="k">class</span> StudentLM(nn.Module):
+
+    <span class="k">def</span> forward(self, input_ids, sparse_teacher=<span class="k">None</span>):
+        <span class="c"># Everything up to and including the final norm is unchanged.</span>
+        hidden = self.final_norm(self.decoder(self.embed(input_ids)))   <span class="c"># [S, d]</span>
+
+        <span class="k">if</span> sparse_teacher <span class="k">is</span> <span class="k">None</span>:
+            <span class="c"># Inference and evaluation keep the usual head.</span>
+            <span class="k">return</span> self.lm_head(hidden)                                 <span class="c"># [S, V]</span>
+
+        <span class="c"># Training: do not call the head. Hand its weight to the loss, which</span>
+        <span class="c"># projects one chunk at a time and returns the per-token KL.</span>
+        W = self.lm_head.weight          <span class="c"># or the embedding, if the two are tied</span>
+        <span class="k">return</span> full_chunked_loss(
+            hidden, W, sparse_teacher,
+            seq_chunk_size=<span class="f">4096</span>,
+            tp_group=self.tp_group,      <span class="c"># if the vocabulary is sharded</span>
+            output_scale=self.logit_scale,   <span class="c"># anything applied to the logits</span>
+            temperature=<span class="f">1.0</span>,                 <span class="c"># after the matmul moves in here</span>
+        )
+</code></pre>
+
+<p>Three things to check when you wire it in. The hidden states must be the ones the head would see, after the final norm. With tied embeddings, pass the embedding matrix as \(W\). And anything applied to the logits after the matmul, such as a logit scale or a distillation temperature, has to move into the loss through <code>output_scale</code> and <code>temperature</code>, because the logits no longer leave it. In a tensor-parallel model such as Megatron, pass the local shard of the head, shaped <code>[V / tp, d]</code>, together with the tensor-parallel group, and set <code>sequence_parallel=True</code> if the hidden states are sharded along the sequence. The kernel handles the all-gather and the reductions.</p>
+
+<p>The <a href="https://github.com/CompactifAI/Full-Chunked-KL-Loss">repository</a> includes the dense and forward-chunked baselines, CPU equivalence tests, and the benchmark behind every number in this post. For offline teacher caching and the distilled model itself, see the <a href="https://arxiv.org/abs/2608.03796">paper</a> and our <a href="https://huggingface.co/blog/MultiverseComputingCAI/efficient-knowledge-distillation">earlier post on Hugging Face</a>.</p>
+
+<pre><code>@misc{ryskulov2026efficientknowledgedistillationllms,
+  title         = {Efficient Knowledge Distillation for LLMs: Offline Top-K Logits and a Fused Chunked KL Loss},
+  author        = {Bakbergen Ryskulov and Iker García-Ferrero and David Montero and David Jansen and Ali Hashemi and Jezabel R. Garcia and Antonio Tiene and Román Orús},
+  year          = {2026},
+  eprint        = {2608.03796},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2608.03796}
+}</code></pre>

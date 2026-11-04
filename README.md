@@ -11,6 +11,7 @@ The site uses the original blue banner and page tabs. Every tab opens a complete
 - `_data/publications.json` — complete publication archive, with optional research summaries
 - `_data/writing.json` — shared articles, summaries, and verified publication dates
 - `publications.md`, `software.md`, `experience.md`, `dissemination.md`, `blog.md` — full archives
+- `blog/` — posts hosted on this site, using `_layouts/post.html`; a post's `styles` and `scripts` front matter loads its own CSS and JS (e.g. `assets/css/post.css`, `assets/js/chunked-kl.js`). List each post in `_data/writing.json` with a site-relative URL.
 - `_layouts/`, `_includes/` — shared layout and reusable content templates
 - `assets/css/main.css` — responsive layout and light/dark themes
 - `assets/js/main.js` — theme preference, pointer-reactive banner, and publication search

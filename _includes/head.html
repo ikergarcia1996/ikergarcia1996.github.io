@@ -20,6 +20,8 @@
 
   {% comment %} Keep cached assets in sync with the HTML after each deployment. {% endcomment %}
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+  {% for sheet in page.styles %}<link rel="stylesheet" href="{% if sheet contains '://' %}{{ sheet }}{% else %}{{ sheet | relative_url }}?v={{ site.time | date: '%s' }}{% endif %}">
+  {% endfor %}
 
   <link rel="icon" type="image/png" sizes="32x32" href="{{ '/images/favicon-32.png' | relative_url }}">
   <link rel="icon" type="image/png" sizes="180x180" href="{{ '/images/favicon-180.png' | relative_url }}">

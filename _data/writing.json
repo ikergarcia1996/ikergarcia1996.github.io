@@ -1,5 +1,26 @@
 [
   {
+    "title": "Optimizing KL loss: how to fit long context distillation into your VRAM",
+    "authors": "Iker García-Ferrero. Based on joint work with Bakbergen Ryskulov, David Montero, David Jansen, Ali Hashemi, Jezabel R. Garcia, Antonio Tiene, Román Orús.",
+    "summary": "An interactive walkthrough of a KL loss kernel that computes exact distillation losses and gradients chunk by chunk, without storing the vocabulary-sized logits: 11.6× less memory and 3.3× faster at 256K tokens.",
+    "links": [
+      {
+        "label": "Blog Post",
+        "url": "/blog/chunked-kl-loss/"
+      },
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/2608.03796"
+      },
+      {
+        "label": "Code",
+        "url": "https://github.com/CompactifAI/Full-Chunked-KL-Loss"
+      }
+    ],
+    "publisher": "This site",
+    "date": "2026-11-04"
+  },
+  {
     "title": "Safety for Whom? Refusing the Right Subset of a Topic, Not the Whole Topic",
     "authors": "Antonio Tiene, Alejo López-Ávila, Iker García-Ferrero.",
     "summary": "We study how to train LLMs to refuse harmful requests within a topic while still answering legitimate ones. Self-generated training data and harmful-benign prompt pairs help control that boundary, and evaluating both sides reveals the trade-off between safety and over-refusal.",
