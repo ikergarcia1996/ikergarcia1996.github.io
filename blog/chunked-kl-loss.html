@@ -22,9 +22,9 @@ scripts:
   - /assets/js/chunked-kl.js
 ---
 
-<p class="lede">To distill a large language model into a smaller one, you compare the teacher's and the student's next-token distributions at every position of every sequence. Each distribution spans the whole vocabulary, which is 128K to 200K entries in current models. At long context, the tensors holding them become the largest objects on the GPU, and the first thing that runs out of memory.</p>
+<p class="lede">To distill a large language model into a smaller one, we typically use a training method that compares the teacher's (large model) and the student's (scaller model) next-token distributions at every position of every sequence. The comparisson is done, by applying the Kullback-Leibler divergence formula to the two distributions. Each distribution spans the whole vocabulary, which is 128K to 256K entries in current models. At long context, the tensors holding them become the largest objects on the GPU, and the first thing that runs out of memory.</p>
 
-<p>We hit this wall when we tried to distill at 32K tokens and beyond. The fix turned out to be a loss kernel that computes the forward KL divergence <em>and</em> its gradients in sequence chunks, fused with the model's output projection, so that the full logit tensor never exists. This post walks through how the kernel works and what it buys.</p>
+<p>We hit this wall when we tried to distill models at 32K tokens and beyond. The fix turned out to be a loss kernel that computes the forward KL divergence <em>and</em> its gradients in sequence chunks, fused with the model's output projection, so that the full logit tensor never exists. This post walks through how the kernel works and what it buys.</p>
 
 <div class="stat-row wide" aria-label="Headline results">
   <div class="stat"><span class="stat-value">11.6×</span><span class="stat-label">less peak memory than a forward-chunked loss at 256K tokens</span></div>
